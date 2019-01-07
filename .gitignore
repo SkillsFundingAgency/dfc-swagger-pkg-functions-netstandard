@@ -1,0 +1,10 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/DFC.Swagger.Core/DFC.Swagger.Core/bin/Debug
+/DFC.Swagger.Core/DFC.Swagger.Core/obj
+/DFC.Swagger.Core/DFC.Swagger.Core.Tests/bin/Debug/netcoreapp2.1
+/DFC.Swagger.Core/DFC.Swagger.Core.Tests/obj
+/DFC.Swagger.Core/.vs/DFC.Swagger.Core/v15
