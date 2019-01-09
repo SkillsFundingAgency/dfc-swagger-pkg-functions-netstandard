@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using DFC.Functions.DI.Core.Attributes;
 using DFC.Swagger.Core.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +18,7 @@ namespace DFC.Swagger.Core
 {
     public static class SwaggerDocumentGenerator
     {
-        public static string GenerateSwaggerDocument(HttpRequest req, string apiTitle, string apiDescription, string apiDefinitionName)
+        public static string GenerateSwaggerDocument(HttpRequest req, string apiTitle, string apiDescription, string apiDefinitionName, Assembly assembly)
         {
 
             if(req == null)
@@ -31,9 +32,10 @@ namespace DFC.Swagger.Core
 
             if (string.IsNullOrEmpty(apiDefinitionName))
                 throw new ArgumentNullException(nameof(apiDefinitionName));
-            
-            var assembly = Assembly.GetExecutingAssembly();
 
+            if (assembly == null)
+                throw new ArgumentNullException(nameof(assembly));
+            
             dynamic doc = new ExpandoObject();
             doc.swagger = "2.0";
             doc.info = new ExpandoObject();
@@ -462,12 +464,12 @@ namespace DFC.Swagger.Core
             }
         }
 
-        public static string ToTitleCase(string str)
+        private static string ToTitleCase(string str)
         {
             return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str);
         }
 
-        public static void AddToExpando(ExpandoObject obj, string name, object value)
+        private static void AddToExpando(ExpandoObject obj, string name, object value)
         {
             if (((IDictionary<string, object>)obj).ContainsKey(name))
             {
