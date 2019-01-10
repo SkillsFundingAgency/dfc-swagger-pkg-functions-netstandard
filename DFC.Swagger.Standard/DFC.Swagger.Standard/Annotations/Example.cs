@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DFC.Swagger.Core.Annotations
+namespace DFC.Swagger.Standard.Annotations
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     public class Example : Attribute

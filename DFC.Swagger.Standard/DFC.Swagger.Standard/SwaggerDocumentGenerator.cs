@@ -8,13 +8,14 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using DFC.Functions.DI.Core.Attributes;
-using DFC.Swagger.Core.Annotations;
+using DFC.Swagger.Standard.Annotations;
+using DFC.Swagger.Standard.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Newtonsoft.Json;
 
-namespace DFC.Swagger.Core
+namespace DFC.Swagger.Standard
 {
     public static class SwaggerDocumentGenerator
     {

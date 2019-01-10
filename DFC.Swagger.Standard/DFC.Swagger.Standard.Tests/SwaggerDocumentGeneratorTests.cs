@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Internal;
 using NUnit.Framework;
 
-namespace DFC.Swagger.Core.Tests
+namespace DFC.Swagger.Standard.Tests
 {
     public class SwaggerDocumentGeneratorTests
     {
