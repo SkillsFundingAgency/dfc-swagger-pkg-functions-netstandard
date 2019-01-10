@@ -9,7 +9,6 @@ using System.Net.Http;
 using System.Reflection;
 using DFC.Functions.DI.Core.Attributes;
 using DFC.Swagger.Standard.Annotations;
-using DFC.Swagger.Standard.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -17,11 +16,10 @@ using Newtonsoft.Json;
 
 namespace DFC.Swagger.Standard
 {
-    public static class SwaggerDocumentGenerator
+    public class SwaggerDocumentGenerator : ISwaggerDocumentGenerator
     {
-        public static string GenerateSwaggerDocument(HttpRequest req, string apiTitle, string apiDescription, string apiDefinitionName, Assembly assembly)
+        public string GenerateSwaggerDocument(HttpRequest req, string apiTitle, string apiDescription, string apiDefinitionName, Assembly assembly)
         {
-
             if(req == null)
                 throw new ArgumentNullException(nameof(req));
 
@@ -58,7 +56,7 @@ namespace DFC.Swagger.Standard
             return JsonConvert.SerializeObject(doc);
         }
 
-        private static dynamic GenerateSecurityDefinitions()
+        private dynamic GenerateSecurityDefinitions()
         {
             dynamic securityDefinitions = new ExpandoObject();
             securityDefinitions.apikeyQuery = new ExpandoObject();
@@ -68,7 +66,7 @@ namespace DFC.Swagger.Standard
             return securityDefinitions;
         }
 
-        private static dynamic GeneratePaths(Assembly assembly, dynamic doc, string apiTitle, string apiDefinitionName)
+        private dynamic GeneratePaths(Assembly assembly, dynamic doc, string apiTitle, string apiDefinitionName)
         {
             dynamic paths = new ExpandoObject();
             var methods = assembly.GetTypes()
@@ -135,7 +133,7 @@ namespace DFC.Swagger.Standard
             return paths;
         }
 
-        private static string GetFunctionDescription(MethodInfo methodInfo, string funcName)
+        private string GetFunctionDescription(MethodInfo methodInfo, string funcName)
         {
             var displayAttr = (DisplayAttribute)methodInfo.GetCustomAttributes(typeof(DisplayAttribute), false)
                 .SingleOrDefault();
@@ -145,7 +143,7 @@ namespace DFC.Swagger.Standard
         /// <summary>
         /// Max 80 characters in summary/title
         /// </summary>
-        private static string GetFunctionName(MethodInfo methodInfo, string funcName)
+        private string GetFunctionName(MethodInfo methodInfo, string funcName)
         {
             var displayAttr = (DisplayAttribute)methodInfo.GetCustomAttributes(typeof(DisplayAttribute), false)
                 .SingleOrDefault();
@@ -156,14 +154,14 @@ namespace DFC.Swagger.Standard
             return $"Run {funcName}";
         }
 
-        private static string GetPropertyDescription(PropertyInfo propertyInfo)
+        private string GetPropertyDescription(PropertyInfo propertyInfo)
         {
             var displayAttr = (DisplayAttribute)propertyInfo.GetCustomAttributes(typeof(DisplayAttribute), false)
                 .SingleOrDefault();
             return !string.IsNullOrWhiteSpace(displayAttr?.Description) ? displayAttr.Description : $"This returns {propertyInfo.PropertyType.Name}";
         }
 
-        private static dynamic GenerateResponseParameterSignature(MethodInfo methodInfo, dynamic doc)
+        private dynamic GenerateResponseParameterSignature(MethodInfo methodInfo, dynamic doc)
         {
             dynamic responses = new ExpandoObject();
             dynamic responseDef = new ExpandoObject();
@@ -241,7 +239,7 @@ namespace DFC.Swagger.Standard
             return responses;
         }
 
-        private static List<object> GenerateFunctionParametersSignature(MethodInfo methodInfo, string route, dynamic doc)
+        private List<object> GenerateFunctionParametersSignature(MethodInfo methodInfo, string route, dynamic doc)
         {
             var parameterSignatures = new List<object>();
 
@@ -304,7 +302,7 @@ namespace DFC.Swagger.Standard
             return parameterSignatures;
         }
 
-        private static void AddObjectProperties(Type t, string parentName, List<object> parameterSignatures, dynamic doc)
+        private void AddObjectProperties(Type t, string parentName, List<object> parameterSignatures, dynamic doc)
         {
             var publicProperties = t.GetProperties(BindingFlags.Public | BindingFlags.Instance);
             foreach (PropertyInfo property in publicProperties)
@@ -331,7 +329,7 @@ namespace DFC.Swagger.Standard
             }
         }
 
-        private static void AddParameterDefinition(IDictionary<string, object> definitions, Type parameterType)
+        private void AddParameterDefinition(IDictionary<string, object> definitions, Type parameterType)
         {
             dynamic objDef;
             if (!definitions.TryGetValue(parameterType.Name, out objDef))
@@ -341,7 +339,7 @@ namespace DFC.Swagger.Standard
             }
         }
 
-        private static dynamic GetObjectSchemaDefinition(IDictionary<string, object> definitions, Type parameterType)
+        private dynamic GetObjectSchemaDefinition(IDictionary<string, object> definitions, Type parameterType)
         {
             dynamic objDef = new ExpandoObject();
             objDef.type = "object";
@@ -382,7 +380,7 @@ namespace DFC.Swagger.Standard
             return objDef;
         }
 
-        private static void SetParameterType(Type parameterType, dynamic opParam, dynamic definitions)
+        private void SetParameterType(Type parameterType, dynamic opParam, dynamic definitions)
         {
             var inputType = parameterType;
             string paramType = parameterType.UnderlyingSystemType.ToString();
@@ -465,12 +463,12 @@ namespace DFC.Swagger.Standard
             }
         }
 
-        private static string ToTitleCase(string str)
+        private string ToTitleCase(string str)
         {
             return CultureInfo.CurrentCulture.TextInfo.ToTitleCase(str);
         }
 
-        private static void AddToExpando(ExpandoObject obj, string name, object value)
+        private void AddToExpando(ExpandoObject obj, string name, object value)
         {
             if (((IDictionary<string, object>)obj).ContainsKey(name))
             {
