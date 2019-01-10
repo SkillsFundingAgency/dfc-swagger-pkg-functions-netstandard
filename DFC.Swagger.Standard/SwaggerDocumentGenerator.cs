@@ -7,7 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
-using DFC.Functions.DI.Core.Attributes;
+using DFC.Functions.DI.Standard.Attributes;
 using DFC.Swagger.Standard.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="DFC.Functions.DI.Core" Version="1.0.0" />
+    <PackageReference Include="DFC.Functions.DI.Standard" Version="1.0.0" />
     <PackageReference Include="Microsoft.Azure.WebJobs.Extensions.Http" Version="3.0.0" />
   </ItemGroup>
 
