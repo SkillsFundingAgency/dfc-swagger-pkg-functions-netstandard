@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DFC.Swagger.Core", "DFC.Swagger.Core\DFC.Swagger.Core.csproj", "{145F574F-025D-4670-AC19-6FDC7D00BB96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DFC.Swagger.Standard", "DFC.Swagger.Standard\DFC.Swagger.Standard.csproj", "{145F574F-025D-4670-AC19-6FDC7D00BB96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DFC.Swagger.Core.Tests", "DFC.Swagger.Core.Tests\DFC.Swagger.Core.Tests.csproj", "{9A12853B-BCEC-4EEB-854C-BE4CC55C3FD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DFC.Swagger.Standard.Tests", "DFC.Swagger.Standard.Tests\DFC.Swagger.Standard.Tests.csproj", "{9A12853B-BCEC-4EEB-854C-BE4CC55C3FD8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
