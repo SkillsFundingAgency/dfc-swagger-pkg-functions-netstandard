@@ -250,6 +250,14 @@ namespace DFC.Swagger.Standard
             opHeaderParam.type = "string";
             parameterSignatures.Add(opHeaderParam);
 
+            dynamic opHeaderParam2 = new ExpandoObject();
+            opHeaderParam2.name = "SubcontractorId";
+            opHeaderParam2.@in = "header";
+            opHeaderParam2.required = true;
+            opHeaderParam2.type = "string";
+            parameterSignatures.Add(opHeaderParam2);
+
+
             foreach (ParameterInfo parameter in methodInfo.GetParameters())
             {
                 if (parameter.ParameterType == typeof(HttpRequest)) continue;
