@@ -253,7 +253,7 @@ namespace DFC.Swagger.Standard
             dynamic opHeaderParam2 = new ExpandoObject();
             opHeaderParam2.name = "SubcontractorId";
             opHeaderParam2.@in = "header";
-            opHeaderParam2.required = true;
+            opHeaderParam2.required = false;
             opHeaderParam2.type = "string";
             parameterSignatures.Add(opHeaderParam2);
 
