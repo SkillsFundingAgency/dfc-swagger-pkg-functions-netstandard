@@ -15,6 +15,7 @@ namespace DFC.Swagger.Standard.Tests
         private const string ApiTitle = "OpenAPI 2 - Swagger";
         private const string ApiDescription = ApiTitle + " Description";
         private const string ApiDefinitionName = "Swagger Generator";
+        private const string ApiVersion = "2.0.0";
 
         [SetUp]
         public void Setup()
@@ -31,63 +32,74 @@ namespace DFC.Swagger.Standard.Tests
         public void SwaggerDocumentGenerator_WhenCalledWithNullHttpRequest_ThrowsArgumentNullException()
         {
             _swaggerDocumentGenerator
-                .GenerateSwaggerDocument(null, ApiTitle, ApiDescription, ApiDefinitionName, _assembly)
+                .GenerateSwaggerDocument(null, ApiTitle, ApiDescription, ApiDefinitionName, ApiVersion, _assembly)
                 .Returns(x=> throw new ArgumentNullException());
 
             Assert.Throws<ArgumentNullException>(() =>
                 _swaggerDocumentGenerator
-                    .GenerateSwaggerDocument(null, ApiTitle, ApiDescription, ApiDefinitionName, _assembly));
+                    .GenerateSwaggerDocument(null, ApiTitle, ApiDescription, ApiDefinitionName, ApiVersion, _assembly));
         }
 
         [Test]
         public void SwaggerDocumentGenerator_WhenCalledWithNullTitle_ThrowsArgumentNullException()
         {
-            _swaggerDocumentGenerator.GenerateSwaggerDocument(_request, null, ApiDescription, ApiDefinitionName, _assembly)
+            _swaggerDocumentGenerator.GenerateSwaggerDocument(_request, null, ApiDescription, ApiDefinitionName, ApiVersion, _assembly)
                 .Returns(x => throw new ArgumentNullException());
 
             Assert.Throws<ArgumentNullException>(() =>
                 _swaggerDocumentGenerator
-                    .GenerateSwaggerDocument(_request, null, ApiDescription, ApiDefinitionName, _assembly));
+                    .GenerateSwaggerDocument(_request, null, ApiDescription, ApiDefinitionName, ApiVersion, _assembly));
         }
 
         [Test]
         public void SwaggerDocumentGenerator_WhenCalledWithNullAPIDescription_ThrowsArgumentNullException()
         {
-            _swaggerDocumentGenerator.GenerateSwaggerDocument(_request, ApiTitle, null, ApiDefinitionName, _assembly)
+            _swaggerDocumentGenerator.GenerateSwaggerDocument(_request, ApiTitle, null, ApiDefinitionName, ApiVersion, _assembly)
                 .Returns(x => throw new ArgumentNullException());
 
             Assert.Throws<ArgumentNullException>(() =>
                 _swaggerDocumentGenerator
-                    .GenerateSwaggerDocument(_request, ApiTitle, null, ApiDefinitionName, _assembly));
+                    .GenerateSwaggerDocument(_request, ApiTitle, null, ApiDefinitionName, ApiVersion, _assembly));
         }
 
         [Test]
         public void SwaggerDocumentGenerator_WhenCalledWithNullApiDefinitionName_ThrowsArgumentNullException()
         {
-            _swaggerDocumentGenerator.GenerateSwaggerDocument(_request, ApiTitle, ApiDescription, null, _assembly)
+            _swaggerDocumentGenerator.GenerateSwaggerDocument(_request, ApiTitle, ApiDescription, null, ApiVersion, _assembly)
                 .Returns(x => throw new ArgumentNullException());
 
             Assert.Throws<ArgumentNullException>(() =>
                 _swaggerDocumentGenerator
-                    .GenerateSwaggerDocument(_request, ApiTitle, ApiDescription, null, _assembly));
+                    .GenerateSwaggerDocument(_request, ApiTitle, ApiDescription, null, ApiVersion, _assembly));
+        }
+
+        [Test]
+        public void SwaggerDocumentGenerator_WhenCalledWithNullApiVersion_ThrowsArgumentNullException()
+        {
+            _swaggerDocumentGenerator.GenerateSwaggerDocument(_request, ApiTitle, ApiDescription, ApiDefinitionName, null, _assembly)
+                .Returns(x => throw new ArgumentNullException());
+
+            Assert.Throws<ArgumentNullException>(() =>
+                _swaggerDocumentGenerator
+                    .GenerateSwaggerDocument(_request, ApiTitle, ApiDescription, ApiDefinitionName, null, _assembly));
         }
 
         [Test]
         public void SwaggerDocumentGenerator_WhenCalledWithNullAssembly_ThrowsArgumentNullException()
         {
-            _swaggerDocumentGenerator.GenerateSwaggerDocument(_request, ApiTitle, ApiDescription, ApiDefinitionName, null)
+            _swaggerDocumentGenerator.GenerateSwaggerDocument(_request, ApiTitle, ApiDescription, ApiDefinitionName, ApiVersion, null)
                 .Returns(x => throw new ArgumentNullException());
 
             Assert.Throws<ArgumentNullException>(() =>
                 _swaggerDocumentGenerator
-                    .GenerateSwaggerDocument(_request, ApiTitle, ApiDescription, ApiDefinitionName, null));
+                    .GenerateSwaggerDocument(_request, ApiTitle, ApiDescription, ApiDefinitionName, ApiVersion, null));
         }
 
         [Test]
         public void SwaggerDocumentGenerator_WhenCalledWithValidParams_ReturnsSwaggerDoc()
         {
             var response =
-                _swaggerDocumentGenerator.GenerateSwaggerDocument(_request, ApiTitle, ApiDescription, ApiDefinitionName, _assembly);
+                _swaggerDocumentGenerator.GenerateSwaggerDocument(_request, ApiTitle, ApiDescription, ApiDefinitionName, ApiVersion, _assembly);
 
             Assert.IsNotNull(response);
         }
