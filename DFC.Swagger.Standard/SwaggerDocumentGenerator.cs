@@ -18,7 +18,7 @@ namespace DFC.Swagger.Standard
 {
     public class SwaggerDocumentGenerator : ISwaggerDocumentGenerator
     {
-        public string GenerateSwaggerDocument(HttpRequest req, string apiTitle, string apiDescription, string apiDefinitionName, Assembly assembly)
+        public string GenerateSwaggerDocument(HttpRequest req, string apiTitle, string apiDescription, string apiDefinitionName, string apiVersion, Assembly assembly)
         {
             if(req == null)
                 throw new ArgumentNullException(nameof(req));
@@ -32,6 +32,9 @@ namespace DFC.Swagger.Standard
             if (string.IsNullOrEmpty(apiDefinitionName))
                 throw new ArgumentNullException(nameof(apiDefinitionName));
 
+            if (string.IsNullOrEmpty(apiVersion))
+                throw new ArgumentNullException(nameof(apiVersion));
+
             if (assembly == null)
                 throw new ArgumentNullException(nameof(assembly));
             
@@ -39,7 +42,7 @@ namespace DFC.Swagger.Standard
             doc.swagger = "2.0";
             doc.info = new ExpandoObject();
             doc.info.title = apiTitle;
-            doc.info.version = "1.0.0";
+            doc.info.version = apiVersion;
             doc.info.description = apiDescription;
             doc.host = req.Host.HasValue ? req.Host.Value : string.Empty;
             doc.basePath = "/";
