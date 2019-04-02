@@ -396,6 +396,8 @@ namespace DFC.Swagger.Standard
             var inputType = parameterType;
             string paramType = parameterType.UnderlyingSystemType.ToString();
 
+            var isEnum = Nullable.GetUnderlyingType(parameterType)?.IsEnum == true;
+
             var setObject = opParam;
             if (inputType.IsArray)
             {
@@ -405,7 +407,7 @@ namespace DFC.Swagger.Standard
                 parameterType = parameterType.GetElementType();
             }
 
-            if (inputType.Namespace == "System" || (inputType.IsGenericType && inputType.GetGenericArguments()[0].Namespace == "System"))
+            if (inputType.Namespace == "System" && !isEnum || (inputType.IsGenericType && inputType.GetGenericArguments()[0].Namespace == "System"))
             {
                 if (paramType.Contains("System.String"))
                 {
@@ -442,26 +444,35 @@ namespace DFC.Swagger.Standard
 
             }
 
-            else if (inputType.IsEnum)
+            else if (isEnum)
             {
                 opParam.type = "string";
 
                 var enumValues = new List<string>();
 
-                foreach (var item in Enum.GetValues(inputType))
+                if (inputType.IsGenericType)
                 {
-                    var memInfo = inputType.GetMember(inputType.GetEnumName(item));
-                    var descriptionAttributes = memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
+                    var enumType = Nullable.GetUnderlyingType(inputType);
 
-                    var description = string.Empty;
+                    if (enumType != null)
+                    {
+                        foreach (var item in Enum.GetValues(enumType))
+                        {
+                            var memInfo = Nullable.GetUnderlyingType(inputType)?.GetMember(item.ToString());
+                            var descriptionAttributes =
+                                memInfo?[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
 
-                    if (descriptionAttributes.Length > 0)
-                        description = ((DescriptionAttribute)descriptionAttributes[0]).Description;
+                            var description = string.Empty;
 
-                    if (string.IsNullOrEmpty(description))
-                        description = item.ToString();
+                            if (descriptionAttributes?.Length > 0)
+                                description = ((DescriptionAttribute)descriptionAttributes[0]).Description;
 
-                    enumValues.Add(Convert.ToInt32(item) + " - " + description);
+                            if (string.IsNullOrEmpty(description))
+                                description = item.ToString();
+
+                            enumValues.Add(Convert.ToInt32(item) + " - " + description);
+                        }
+                    }
                 }
 
                 opParam.@enum = enumValues.ToArray();
