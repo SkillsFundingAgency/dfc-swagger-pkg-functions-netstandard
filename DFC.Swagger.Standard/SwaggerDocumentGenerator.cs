@@ -161,6 +161,7 @@ namespace DFC.Swagger.Standard
         {
             var displayAttr = (DisplayAttribute)propertyInfo.GetCustomAttributes(typeof(DisplayAttribute), false)
                 .SingleOrDefault();
+            
             return !string.IsNullOrWhiteSpace(displayAttr?.Description) ? displayAttr.Description : $"This returns {propertyInfo.PropertyType.Name}";
         }
 
@@ -399,12 +400,18 @@ namespace DFC.Swagger.Standard
             var isEnum = Nullable.GetUnderlyingType(parameterType)?.IsEnum == true;
 
             var setObject = opParam;
-            if (inputType.IsArray)
+            if ((inputType.IsArray || inputType.GetInterface(typeof(System.Collections.IEnumerable).Name, false) != null) && inputType != typeof(String))
             {
                 opParam.type = "array";
                 opParam.items = new ExpandoObject();
                 setObject = opParam.items;
-                parameterType = parameterType.GetElementType();
+
+                if(inputType.IsArray) {
+                    parameterType = parameterType.GetElementType();
+                } else if (inputType.IsGenericType && inputType.GenericTypeArguments.Length == 1) {
+                    parameterType = inputType.GetGenericArguments()[0];
+                }
+                
             }
 
             if (inputType.Namespace == "System" && !isEnum || (inputType.IsGenericType && inputType.GetGenericArguments()[0].Namespace == "System"))
