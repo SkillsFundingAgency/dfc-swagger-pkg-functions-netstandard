@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using DFC.Functions.DI.Standard.Attributes;
+using DFC.JSON.Standard;
 using DFC.Swagger.Standard.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -343,8 +344,7 @@ namespace DFC.Swagger.Standard
 
         private void AddParameterDefinition(IDictionary<string, object> definitions, Type parameterType)
         {
-            dynamic objDef;
-            if (!definitions.TryGetValue(parameterType.Name, out objDef))
+            if (!definitions.TryGetValue(parameterType.Name, out dynamic objDef))
             {
                 objDef = GetObjectSchemaDefinition(definitions, parameterType);
                 definitions.Add(parameterType.Name, objDef);
@@ -360,10 +360,15 @@ namespace DFC.Swagger.Standard
             List<string> requiredProperties = new List<string>();
             foreach (PropertyInfo property in publicProperties)
             {
+
+                if (property.GetCustomAttributes().Any(attr => attr is JsonIgnoreSerializeAttribute))
+                    continue;
+                
                 if (property.GetCustomAttributes().Any(attr => attr is RequiredAttribute))
                 {
                     requiredProperties.Add(property.Name);
                 }
+
                 dynamic propDef = new ExpandoObject();
                 propDef.description = GetPropertyDescription(property);
 
