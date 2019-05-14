@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Reflection;
 using DFC.Functions.DI.Standard.Attributes;
+using DFC.JSON.Standard.Attributes;
 using DFC.Swagger.Standard.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -343,8 +344,7 @@ namespace DFC.Swagger.Standard
 
         private void AddParameterDefinition(IDictionary<string, object> definitions, Type parameterType)
         {
-            dynamic objDef;
-            if (!definitions.TryGetValue(parameterType.Name, out objDef))
+            if (!definitions.TryGetValue(parameterType.Name, out dynamic objDef))
             {
                 objDef = GetObjectSchemaDefinition(definitions, parameterType);
                 definitions.Add(parameterType.Name, objDef);
@@ -360,10 +360,15 @@ namespace DFC.Swagger.Standard
             List<string> requiredProperties = new List<string>();
             foreach (PropertyInfo property in publicProperties)
             {
+
+                if (property.GetCustomAttributes().Any(attr => attr is JsonIgnoreOnSerialize))
+                    continue;
+                
                 if (property.GetCustomAttributes().Any(attr => attr is RequiredAttribute))
                 {
                     requiredProperties.Add(property.Name);
                 }
+
                 dynamic propDef = new ExpandoObject();
                 propDef.description = GetPropertyDescription(property);
 
@@ -397,7 +402,8 @@ namespace DFC.Swagger.Standard
             var inputType = parameterType;
             string paramType = parameterType.UnderlyingSystemType.ToString();
 
-            var isEnum = Nullable.GetUnderlyingType(parameterType)?.IsEnum == true;
+            var isEnum = parameterType.IsEnum;
+            var isNullableEnum = Nullable.GetUnderlyingType(parameterType)?.IsEnum == true;
 
             var setObject = opParam;
             if ((inputType.IsArray || inputType.GetInterface(typeof(System.Collections.IEnumerable).Name, false) != null) && inputType != typeof(String))
@@ -414,7 +420,7 @@ namespace DFC.Swagger.Standard
                 
             }
 
-            if (inputType.Namespace == "System" && !isEnum || (inputType.IsGenericType && inputType.GetGenericArguments()[0].Namespace == "System"))
+            if (inputType.Namespace == "System" && (!isNullableEnum || !isEnum) || (inputType.IsGenericType && inputType.GetGenericArguments()[0].Namespace == "System"))
             {
                 if (paramType.Contains("System.String"))
                 {
@@ -450,14 +456,37 @@ namespace DFC.Swagger.Standard
                 }
 
             }
-
-            else if (isEnum)
+            else if (isEnum || isNullableEnum)
             {
                 opParam.type = "string";
-
                 var enumValues = new List<string>();
 
-                if (inputType.IsGenericType)
+                if (isEnum)
+                {
+                    foreach (var item in Enum.GetValues(inputType))
+                    {
+                        var enumName = inputType.GetEnumName(item);
+
+                        if (enumName != null)
+                        {
+                            var memInfo = inputType.GetMember(enumName);
+                            var descriptionAttributes =
+                                memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
+
+                            var description = string.Empty;
+
+                            if (descriptionAttributes.Length > 0)
+                                description = ((DescriptionAttribute)descriptionAttributes[0]).Description;
+
+                            if (string.IsNullOrEmpty(description))
+                                description = item.ToString();
+
+                            enumValues.Add(Convert.ToInt32(item) + " - " + description);
+                        }
+                    }
+                }
+
+                if (isNullableEnum)
                 {
                     var enumType = Nullable.GetUnderlyingType(inputType);
 
@@ -479,10 +508,12 @@ namespace DFC.Swagger.Standard
 
                             enumValues.Add(Convert.ToInt32(item) + " - " + description);
                         }
+
                     }
                 }
 
-                opParam.@enum = enumValues.ToArray();
+                if (enumValues.Any())
+                    opParam.@enum = enumValues.ToArray();
 
             }
             else if (definitions != null)
