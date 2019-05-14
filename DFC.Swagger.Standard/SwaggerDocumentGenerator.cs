@@ -420,7 +420,7 @@ namespace DFC.Swagger.Standard
                 
             }
 
-            if (inputType.Namespace == "System" && !isEnum || (inputType.IsGenericType && inputType.GetGenericArguments()[0].Namespace == "System"))
+            if (inputType.Namespace == "System" && (!isNullableEnum || !isEnum) || (inputType.IsGenericType && inputType.GetGenericArguments()[0].Namespace == "System"))
             {
                 if (paramType.Contains("System.String"))
                 {
