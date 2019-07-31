@@ -19,9 +19,13 @@ namespace DFC.Swagger.Standard
 {
     public class SwaggerDocumentGenerator : ISwaggerDocumentGenerator
     {
-        public string GenerateSwaggerDocument(HttpRequest req, string apiTitle, string apiDescription, string apiDefinitionName, string apiVersion, Assembly assembly)
+        bool IncludeSubcontractorId;
+
+        public string GenerateSwaggerDocument(HttpRequest req, string apiTitle, string apiDescription, string apiDefinitionName, string apiVersion, Assembly assembly, bool includeSubcontractorId=true)
         {
-            if(req == null)
+            IncludeSubcontractorId = includeSubcontractorId;
+
+            if (req == null)
                 throw new ArgumentNullException(nameof(req));
 
             if (string.IsNullOrEmpty(apiTitle))
@@ -255,13 +259,15 @@ namespace DFC.Swagger.Standard
             opHeaderParam.type = "string";
             parameterSignatures.Add(opHeaderParam);
 
-            dynamic opHeaderParam2 = new ExpandoObject();
-            opHeaderParam2.name = "SubcontractorId";
-            opHeaderParam2.@in = "header";
-            opHeaderParam2.required = false;
-            opHeaderParam2.type = "string";
-            parameterSignatures.Add(opHeaderParam2);
-
+            if (IncludeSubcontractorId)
+            {
+                dynamic opHeaderParam2 = new ExpandoObject();
+                opHeaderParam2.name = "SubcontractorId";
+                opHeaderParam2.@in = "header";
+                opHeaderParam2.required = false;
+                opHeaderParam2.type = "string";
+                parameterSignatures.Add(opHeaderParam2);
+            }
 
             foreach (ParameterInfo parameter in methodInfo.GetParameters())
             {
