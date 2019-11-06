@@ -1,4 +1,11 @@
-﻿using System;
+﻿using DFC.Functions.DI.Standard.Attributes;
+using DFC.JSON.Standard.Attributes;
+using DFC.Swagger.Standard.Annotations;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.WebJobs;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -7,23 +14,18 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
-using DFC.Functions.DI.Standard.Attributes;
-using DFC.JSON.Standard.Attributes;
-using DFC.Swagger.Standard.Annotations;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Newtonsoft.Json;
 
 namespace DFC.Swagger.Standard
 {
     public class SwaggerDocumentGenerator : ISwaggerDocumentGenerator
     {
-        bool IncludeSubcontractorId;
+        private bool IncludeSubcontractorId;
+        private bool IncludeTouchpointId;
 
-        public string GenerateSwaggerDocument(HttpRequest req, string apiTitle, string apiDescription, string apiDefinitionName, string apiVersion, Assembly assembly, bool includeSubcontractorId=true)
+        public string GenerateSwaggerDocument(HttpRequest req, string apiTitle, string apiDescription, string apiDefinitionName, string apiVersion, Assembly assembly, bool includeSubcontractorId = true, bool includeTouchpointId = true)
         {
             IncludeSubcontractorId = includeSubcontractorId;
+            IncludeTouchpointId = includeTouchpointId;
 
             if (req == null)
                 throw new ArgumentNullException(nameof(req));
@@ -42,7 +44,7 @@ namespace DFC.Swagger.Standard
 
             if (assembly == null)
                 throw new ArgumentNullException(nameof(assembly));
-            
+
             dynamic doc = new ExpandoObject();
             doc.swagger = "2.0";
             doc.info = new ExpandoObject();
@@ -83,7 +85,8 @@ namespace DFC.Swagger.Standard
             foreach (MethodInfo methodInfo in methods)
             {
                 //hide any disabled methods
-                if (methodInfo.GetCustomAttributes(typeof(DisableAttribute), true).Any())
+                if (methodInfo.GetCustomAttributes(typeof(DisableAttribute), true).Any() ||
+                    methodInfo.GetCustomAttributes(typeof(SwaggerIgnoreAttribute), true).Any())
                     continue;
 
                 var route = "/api/";
@@ -166,7 +169,7 @@ namespace DFC.Swagger.Standard
         {
             var displayAttr = (DisplayAttribute)propertyInfo.GetCustomAttributes(typeof(DisplayAttribute), false)
                 .SingleOrDefault();
-            
+
             return !string.IsNullOrWhiteSpace(displayAttr?.Description) ? displayAttr.Description : $"This returns {propertyInfo.PropertyType.Name}";
         }
 
@@ -174,7 +177,6 @@ namespace DFC.Swagger.Standard
         {
             dynamic responses = new ExpandoObject();
             dynamic responseDef = new ExpandoObject();
-
 
             var returnType = methodInfo.ReturnType;
             if (returnType.IsGenericType)
@@ -252,12 +254,15 @@ namespace DFC.Swagger.Standard
         {
             var parameterSignatures = new List<object>();
 
-            dynamic opHeaderParam = new ExpandoObject();
-            opHeaderParam.name = "TouchpointId";
-            opHeaderParam.@in = "header";
-            opHeaderParam.required = true;
-            opHeaderParam.type = "string";
-            parameterSignatures.Add(opHeaderParam);
+            if (IncludeTouchpointId)
+            {
+                dynamic opHeaderParam = new ExpandoObject();
+                opHeaderParam.name = "TouchpointId";
+                opHeaderParam.@in = "header";
+                opHeaderParam.required = true;
+                opHeaderParam.type = "string";
+                parameterSignatures.Add(opHeaderParam);
+            }
 
             if (IncludeSubcontractorId)
             {
@@ -366,10 +371,9 @@ namespace DFC.Swagger.Standard
             List<string> requiredProperties = new List<string>();
             foreach (PropertyInfo property in publicProperties)
             {
-
                 if (property.GetCustomAttributes().Any(attr => attr is JsonIgnoreOnSerialize))
                     continue;
-                
+
                 if (property.GetCustomAttributes().Any(attr => attr is RequiredAttribute))
                 {
                     requiredProperties.Add(property.Name);
@@ -418,12 +422,14 @@ namespace DFC.Swagger.Standard
                 opParam.items = new ExpandoObject();
                 setObject = opParam.items;
 
-                if(inputType.IsArray) {
+                if (inputType.IsArray)
+                {
                     parameterType = parameterType.GetElementType();
-                } else if (inputType.IsGenericType && inputType.GenericTypeArguments.Length == 1) {
+                }
+                else if (inputType.IsGenericType && inputType.GenericTypeArguments.Length == 1)
+                {
                     parameterType = inputType.GetGenericArguments()[0];
                 }
-                
             }
 
             if (inputType.Namespace == "System" && !isNullableEnum && !isEnum || (inputType.IsGenericType && inputType.GetGenericArguments()[0].Namespace == "System"))
@@ -460,7 +466,6 @@ namespace DFC.Swagger.Standard
                 {
                     setObject.type = "string";
                 }
-
             }
             else if (isEnum || isNullableEnum)
             {
@@ -514,13 +519,11 @@ namespace DFC.Swagger.Standard
 
                             enumValues.Add(Convert.ToInt32(item) + " - " + description);
                         }
-
                     }
                 }
 
                 if (enumValues.Any())
                     opParam.@enum = enumValues.ToArray();
-
             }
             else if (definitions != null)
             {
