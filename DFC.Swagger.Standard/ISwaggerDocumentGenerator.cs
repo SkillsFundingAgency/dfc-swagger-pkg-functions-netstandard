@@ -1,11 +1,11 @@
-﻿using System.Reflection;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using System.Reflection;
 
 namespace DFC.Swagger.Standard
 {
     public interface ISwaggerDocumentGenerator
     {
         string GenerateSwaggerDocument(HttpRequest req, string apiTitle, string apiDescription,
-            string apiDefinitionName, string apiVersion, Assembly assembly, bool includeSubcontractorId = true, bool includeTouchpointId = true);
+            string apiDefinitionName, string apiVersion, Assembly assembly, bool includeSubcontractorId = true, bool includeTouchpointId = true, string pathPrefix = "/api/");
     }
 }

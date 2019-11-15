@@ -22,7 +22,7 @@ namespace DFC.Swagger.Standard
         private bool IncludeSubcontractorId;
         private bool IncludeTouchpointId;
 
-        public string GenerateSwaggerDocument(HttpRequest req, string apiTitle, string apiDescription, string apiDefinitionName, string apiVersion, Assembly assembly, bool includeSubcontractorId = true, bool includeTouchpointId = true)
+        public string GenerateSwaggerDocument(HttpRequest req, string apiTitle, string apiDescription, string apiDefinitionName, string apiVersion, Assembly assembly, bool includeSubcontractorId = true, bool includeTouchpointId = true, string pathPrefix = "/api/")
         {
             IncludeSubcontractorId = includeSubcontractorId;
             IncludeTouchpointId = includeTouchpointId;
@@ -60,7 +60,7 @@ namespace DFC.Swagger.Standard
             }
 
             doc.definitions = new ExpandoObject();
-            doc.paths = GeneratePaths(assembly, doc, apiTitle, apiDefinitionName);
+            doc.paths = GeneratePaths(assembly, doc, apiTitle, apiDefinitionName, pathPrefix);
             doc.securityDefinitions = GenerateSecurityDefinitions();
 
             return JsonConvert.SerializeObject(doc);
@@ -76,7 +76,7 @@ namespace DFC.Swagger.Standard
             return securityDefinitions;
         }
 
-        private dynamic GeneratePaths(Assembly assembly, dynamic doc, string apiTitle, string apiDefinitionName)
+        private dynamic GeneratePaths(Assembly assembly, dynamic doc, string apiTitle, string apiDefinitionName, string pathPrefix)
         {
             dynamic paths = new ExpandoObject();
             var methods = assembly.GetTypes()
@@ -89,7 +89,7 @@ namespace DFC.Swagger.Standard
                     methodInfo.GetCustomAttributes(typeof(SwaggerIgnoreAttribute), true).Any())
                     continue;
 
-                var route = "/api/";
+                var route = pathPrefix;
 
                 var functionAttr = (FunctionNameAttribute)methodInfo.GetCustomAttributes(typeof(FunctionNameAttribute), false)
                     .Single();
