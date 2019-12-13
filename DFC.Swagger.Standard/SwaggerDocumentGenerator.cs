@@ -382,10 +382,6 @@ namespace DFC.Swagger.Standard
                 dynamic propDef = new ExpandoObject();
                 propDef.description = GetPropertyDescription(property);
 
-                var exampleAttribute = (Example)property.GetCustomAttributes(typeof(Example), false).FirstOrDefault();
-                if (exampleAttribute != null)
-                    propDef.example = exampleAttribute.Description;
-
                 var stringAttribute = (StringLengthAttribute)property.GetCustomAttributes(typeof(StringLengthAttribute), false).FirstOrDefault();
                 if (stringAttribute != null)
                 {
@@ -397,7 +393,9 @@ namespace DFC.Swagger.Standard
                 if (regexAttribute != null)
                     propDef.pattern = regexAttribute.Pattern;
 
-                SetParameterType(property.PropertyType, propDef, definitions);
+                var exampleAttribute = (Example)property.GetCustomAttributes(typeof(Example), false).FirstOrDefault();
+
+                SetParameterType(property.PropertyType, propDef, definitions, exampleAttribute?.Description);
                 AddToExpando(objDef.properties, property.Name, propDef);
             }
             if (requiredProperties.Count > 0)
@@ -407,7 +405,7 @@ namespace DFC.Swagger.Standard
             return objDef;
         }
 
-        private void SetParameterType(Type parameterType, dynamic opParam, dynamic definitions)
+        private void SetParameterType(Type parameterType, dynamic opParam, dynamic definitions, string exampleDescription = "")
         {
             var inputType = parameterType;
             string paramType = parameterType.UnderlyingSystemType.ToString();
@@ -434,37 +432,51 @@ namespace DFC.Swagger.Standard
 
             if (inputType.Namespace == "System" && !isNullableEnum && !isEnum || (inputType.IsGenericType && inputType.GetGenericArguments()[0].Namespace == "System"))
             {
-                if (paramType.Contains("System.String"))
-                {
-                    setObject.type = "string";
-                }
-                else if (paramType.Contains("System.DateTime"))
+                if (paramType.Contains("System.DateTime"))
                 {
                     setObject.format = "date";
-                    setObject.type = "string";
+                    setObject.type = "datetime";
+                    if (!string.IsNullOrWhiteSpace(exampleDescription)) setObject.example = DateTime.Parse(exampleDescription);
                 }
                 else if (paramType.Contains("System.Int32"))
                 {
                     setObject.format = "int32";
                     setObject.type = "integer";
+                    if (!string.IsNullOrWhiteSpace(exampleDescription)) setObject.example = int.Parse(exampleDescription);
                 }
                 else if (paramType.Contains("System.Int64"))
                 {
                     setObject.format = "int64";
                     setObject.type = "integer";
+                    if (!string.IsNullOrWhiteSpace(exampleDescription)) setObject.example = int.Parse(exampleDescription);
                 }
                 else if (paramType.Contains("System.Single"))
                 {
                     setObject.format = "float";
                     setObject.type = "number";
+                    if (!string.IsNullOrWhiteSpace(exampleDescription)) setObject.example = float.Parse(exampleDescription);
+                }
+                else if (paramType.Contains("System.Decimal"))
+                {
+                    setObject.format = "decimal";
+                    setObject.type = "number";
+                    if (!string.IsNullOrWhiteSpace(exampleDescription)) setObject.example = decimal.Parse(exampleDescription);
+                }
+                else if (paramType.Contains("System.Double"))
+                {
+                    setObject.format = "double";
+                    setObject.type = "number";
+                    if (!string.IsNullOrWhiteSpace(exampleDescription)) setObject.example = double.Parse(exampleDescription);
                 }
                 else if (paramType.Contains("System.Boolean"))
                 {
                     setObject.type = "boolean";
+                    if (!string.IsNullOrWhiteSpace(exampleDescription)) setObject.example = bool.Parse(exampleDescription);
                 }
                 else
                 {
                     setObject.type = "string";
+                    if (!string.IsNullOrWhiteSpace(exampleDescription)) setObject.example = exampleDescription;
                 }
             }
             else if (isEnum || isNullableEnum)
