@@ -434,8 +434,8 @@ namespace DFC.Swagger.Standard
             {
                 if (paramType.Contains("System.DateTime"))
                 {
-                    setObject.format = "date";
-                    setObject.type = "datetime";
+                    setObject.format = "date-time";
+                    setObject.type = "string";
                     if (!string.IsNullOrWhiteSpace(exampleDescription)) setObject.example = DateTime.Parse(exampleDescription);
                 }
                 else if (paramType.Contains("System.Int32"))
