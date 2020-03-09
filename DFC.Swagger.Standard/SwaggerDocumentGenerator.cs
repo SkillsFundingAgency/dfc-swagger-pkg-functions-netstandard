@@ -416,7 +416,9 @@ namespace DFC.Swagger.Standard
             var setObject = opParam;
             if ((inputType.IsArray || inputType.GetInterface(typeof(System.Collections.IEnumerable).Name, false) != null) && inputType != typeof(String))
             {
+
                 opParam.type = "array";
+                if (!string.IsNullOrWhiteSpace(exampleDescription)) setObject.example = exampleDescription;
                 opParam.items = new ExpandoObject();
                 setObject = opParam.items;
 
@@ -426,7 +428,37 @@ namespace DFC.Swagger.Standard
                 }
                 else if (inputType.IsGenericType && inputType.GenericTypeArguments.Length == 1)
                 {
-                    parameterType = inputType.GetGenericArguments()[0];
+                    parameterType = inputType.GetGenericArguments()[0]; ;
+
+                    if (parameterType.IsEnum)
+                    {
+                        var enumValues = new List<string>();
+                        foreach (var item in Enum.GetValues(parameterType))
+                        {
+                            var enumName = item.ToString();
+
+                            if (enumName != null)
+                            {
+                                var memInfo = parameterType.GetMember(enumName);
+                                var descriptionAttributes =
+                                    memInfo[0].GetCustomAttributes(typeof(DescriptionAttribute), false);
+
+                                var description = string.Empty;
+
+                                if (descriptionAttributes.Length > 0)
+                                    description = ((DescriptionAttribute)descriptionAttributes[0]).Description;
+
+                                if (string.IsNullOrEmpty(description))
+                                    description = item.ToString();
+
+                                enumValues.Add(Convert.ToInt32(item) + " - " + description);
+                            }
+                        }
+                        //Need to remove definition value here
+                        definitions = null;
+                        if (enumValues.Any())
+                            opParam.items.@enum = enumValues.ToArray();
+                    }
                 }
             }
 
