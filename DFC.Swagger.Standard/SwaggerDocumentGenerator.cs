@@ -274,6 +274,21 @@ namespace DFC.Swagger.Standard
                 parameterSignatures.Add(opHeaderParam2);
             }
 
+            var postBodyAttr = methodInfo.GetCustomAttributes().FirstOrDefault(attr => attr is PostRequestBodyAttribute);
+            if (postBodyAttr != null)
+            {
+                var postBody = postBodyAttr as PostRequestBodyAttribute;
+                dynamic opParam = new ExpandoObject();
+                opParam.name = "post-body";
+                opParam.@in = "body";
+                opParam.required = true;
+                opParam.schema = new ExpandoObject();
+
+                AddToExpando(opParam.schema, "$ref", $"#/definitions/{postBody?.Type.Name}");
+                parameterSignatures.Add(opParam);
+                AddParameterDefinition((IDictionary<string, object>)doc.definitions, postBody?.Type);
+            }
+
             foreach (ParameterInfo parameter in methodInfo.GetParameters())
             {
                 if (parameter.ParameterType == typeof(HttpRequest)) continue;
@@ -371,7 +386,7 @@ namespace DFC.Swagger.Standard
             List<string> requiredProperties = new List<string>();
             foreach (PropertyInfo property in publicProperties)
             {
-                if (property.GetCustomAttributes().Any(attr => attr is JsonIgnoreOnSerialize))
+                if (property.GetCustomAttributes().Any(attr => attr is JsonIgnoreOnSerialize) || property.GetCustomAttributes().Any(attr => attr is PostRequestBodyAttribute))
                     continue;
 
                 if (property.GetCustomAttributes().Any(attr => attr is RequiredAttribute))
@@ -416,7 +431,6 @@ namespace DFC.Swagger.Standard
             var setObject = opParam;
             if ((inputType.IsArray || inputType.GetInterface(typeof(System.Collections.IEnumerable).Name, false) != null) && inputType != typeof(String))
             {
-
                 opParam.type = "array";
                 if (!string.IsNullOrWhiteSpace(exampleDescription)) setObject.example = exampleDescription;
                 opParam.items = new ExpandoObject();
