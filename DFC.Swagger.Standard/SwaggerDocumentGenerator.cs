@@ -258,6 +258,7 @@ namespace DFC.Swagger.Standard
             {
                 dynamic opHeaderParam = new ExpandoObject();
                 opHeaderParam.name = "TouchpointId";
+                opHeaderParam.description = "The touchpoint id";
                 opHeaderParam.@in = "header";
                 opHeaderParam.required = true;
                 opHeaderParam.type = "string";
@@ -268,6 +269,7 @@ namespace DFC.Swagger.Standard
             {
                 dynamic opHeaderParam2 = new ExpandoObject();
                 opHeaderParam2.name = "SubcontractorId";
+                opHeaderParam2.description = "The subcontractor id";
                 opHeaderParam2.@in = "header";
                 opHeaderParam2.required = false;
                 opHeaderParam2.type = "string";
