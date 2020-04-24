@@ -529,7 +529,7 @@ namespace DFC.Swagger.Standard
             }
             else if (isEnum || isNullableEnum)
             {
-                opParam.type = "string";
+                opParam.type = "int32";
                 var enumValues = new List<string>();
 
                 if (isEnum)
