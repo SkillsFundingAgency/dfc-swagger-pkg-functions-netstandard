@@ -271,7 +271,7 @@ namespace DFC.Swagger.Standard
                 opHeaderParam2.name = "SubcontractorId";
                 opHeaderParam2.description = "The subcontractor id";
                 opHeaderParam2.@in = "header";
-                opHeaderParam2.required = true;
+                opHeaderParam2.required = false;
                 opHeaderParam2.type = "string";
                 parameterSignatures.Add(opHeaderParam2);
             }
