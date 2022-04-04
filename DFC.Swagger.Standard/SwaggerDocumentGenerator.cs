@@ -233,7 +233,7 @@ namespace DFC.Swagger.Standard
                 }
             }
 
-            // automatically get data(http code, description and show schema) from the new custom response class
+            // automatically get data(http code, description, and show schema) from the new custom response class
             var responseCodes = methodInfo.GetCustomAttributes(typeof(Response), false);
 
             foreach (var response in responseCodes)
