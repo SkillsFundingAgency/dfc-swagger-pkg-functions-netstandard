@@ -250,7 +250,7 @@ namespace DFC.Swagger.Standard
             return responses;
         }
 
-        private List<object> GenerateFunctionParametersSignature(MethodInfo methodInfo, string route, dynamic doc)
+        private List<object> GenerateFunctionParametersSignature(MethodInfo methodInfo, string route, dynamic doc, string funcName)
         {
             var parameterSignatures = new List<object>();
 
@@ -271,9 +271,18 @@ namespace DFC.Swagger.Standard
                 opHeaderParam2.name = "SubcontractorId";
                 opHeaderParam2.description = "The subcontractor id";
                 opHeaderParam2.@in = "header";
-                opHeaderParam2.required = true;
                 opHeaderParam2.type = "string";
                 parameterSignatures.Add(opHeaderParam2);
+                if (funcName != "Outcommes - v3")
+                {
+                    opHeaderParam2.required = true;
+                } else
+                {
+                    opHeaderParam2.required = false;
+                }
+
+            }
+            else { 
             }
 
             var postBodyAttr = methodInfo.GetCustomAttributes().FirstOrDefault(attr => attr is PostRequestBodyAttribute);
