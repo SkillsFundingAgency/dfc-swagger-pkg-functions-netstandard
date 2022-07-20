@@ -250,7 +250,7 @@ namespace DFC.Swagger.Standard
             return responses;
         }
 
-        private List<object> GenerateFunctionParametersSignature(MethodInfo methodInfo, string route, dynamic doc, string funcName)
+        private List<object> GenerateFunctionParametersSignature(MethodInfo methodInfo, string route, dynamic doc)
         {
             var parameterSignatures = new List<object>();
 
@@ -271,15 +271,9 @@ namespace DFC.Swagger.Standard
                 opHeaderParam2.name = "SubcontractorId";
                 opHeaderParam2.description = "The subcontractor id";
                 opHeaderParam2.@in = "header";
-                opHeaderParam2.required = false;
+                opHeaderParam2.required = true;
                 opHeaderParam2.type = "string";
                 parameterSignatures.Add(opHeaderParam2);
-
-                // testing deployment/visibility of changes relating to NCSLT-58
-                if (funcName.ToLower().Contains("outcomes"))
-                {
-                    opHeaderParam2.required = true;
-                }
             }
 
             var postBodyAttr = methodInfo.GetCustomAttributes().FirstOrDefault(attr => attr is PostRequestBodyAttribute);
