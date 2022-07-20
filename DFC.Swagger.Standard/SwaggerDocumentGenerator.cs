@@ -250,7 +250,7 @@ namespace DFC.Swagger.Standard
             return responses;
         }
 
-        private List<object> GenerateFunctionParametersSignature(MethodInfo methodInfo, string route, dynamic doc, string apiDisplayName)
+        private List<object> GenerateFunctionParametersSignature(MethodInfo methodInfo, string route, dynamic doc, string funcName)
         {
             var parameterSignatures = new List<object>();
 
@@ -276,7 +276,7 @@ namespace DFC.Swagger.Standard
                 parameterSignatures.Add(opHeaderParam2);
 
                 // testing deployment/visibility of changes relating to NCSLT-58
-                if (apiDisplayName.ToLower().Contains("outcomes"))
+                if (funcName.ToLower().Contains("outcomes"))
                 {
                     opHeaderParam2.required = true;
                 }
