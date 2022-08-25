@@ -123,7 +123,7 @@ namespace DFC.Swagger.Standard
                     operation.operationId = ToTitleCase(functionAttr.Name);
                     operation.produces = new[] { "application/json" };
                     operation.consumes = new[] { "application/json" };
-                    operation.parameters = GenerateFunctionParametersSignature(methodInfo, route, doc);
+                    operation.parameters = GenerateFunctionParametersSignature(methodInfo, route, doc, null);
 
                     // Summary is title
                     operation.summary = GetFunctionName(methodInfo, functionAttr.Name);
