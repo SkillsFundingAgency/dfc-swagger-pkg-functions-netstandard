@@ -250,7 +250,7 @@ namespace DFC.Swagger.Standard
             return responses;
         }
 
-        private List<object> GenerateFunctionParametersSignature(MethodInfo methodInfo, string route, dynamic doc, string funcName)
+        private List<object> GenerateFunctionParametersSignature(MethodInfo methodInfo, string route, dynamic doc, string apiDisplayName)
         {
             var parameterSignatures = new List<object>();
 
@@ -274,7 +274,7 @@ namespace DFC.Swagger.Standard
                 opHeaderParam2.required = false;
                 opHeaderParam2.type = "string";
                 parameterSignatures.Add(opHeaderParam2);
-                if (funcName.ToLower().Contains("outcomes"))
+                if (apiDisplayName.ToLower().Contains("outcomes"))
                 { 
                     opHeaderParam2.Required = true; 
                 }
