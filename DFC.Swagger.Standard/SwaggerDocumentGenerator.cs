@@ -123,7 +123,7 @@ namespace DFC.Swagger.Standard
                     operation.operationId = ToTitleCase(functionAttr.Name);
                     operation.produces = new[] { "application/json" };
                     operation.consumes = new[] { "application/json" };
-                    operation.parameters = GenerateFunctionParametersSignature(methodInfo, route, doc);
+                    operation.parameters = GenerateFunctionParametersSignature(methodInfo, route, doc, null);
 
                     // Summary is title
                     operation.summary = GetFunctionName(methodInfo, functionAttr.Name);
@@ -250,7 +250,7 @@ namespace DFC.Swagger.Standard
             return responses;
         }
 
-        private List<object> GenerateFunctionParametersSignature(MethodInfo methodInfo, string route, dynamic doc)
+        private List<object> GenerateFunctionParametersSignature(MethodInfo methodInfo, string route, dynamic doc, string apiDisplayName)
         {
             var parameterSignatures = new List<object>();
 
@@ -274,6 +274,10 @@ namespace DFC.Swagger.Standard
                 opHeaderParam2.required = false;
                 opHeaderParam2.type = "string";
                 parameterSignatures.Add(opHeaderParam2);
+                if (apiDisplayName.ToLower().Contains("outcomes"))
+                { 
+                    opHeaderParam2.Required = true; 
+                }
             }
 
             var postBodyAttr = methodInfo.GetCustomAttributes().FirstOrDefault(attr => attr is PostRequestBodyAttribute);
