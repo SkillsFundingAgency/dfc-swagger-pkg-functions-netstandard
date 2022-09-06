@@ -274,8 +274,9 @@ namespace DFC.Swagger.Standard
                 opHeaderParam2.required = false;
                 opHeaderParam2.type = "string";
                 parameterSignatures.Add(opHeaderParam2);
-                if (apiDisplayName.ToLower().Contains("outcomes"))
-                { 
+                if (apiDisplayName.IsNullOrEmpty()) {
+                    { }
+                } else if (apiDisplayName.ToLower().Contains("outcomes")) { 
                     opHeaderParam2.Required = true; 
                 }
             }
