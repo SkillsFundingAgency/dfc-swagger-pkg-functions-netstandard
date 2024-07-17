@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <Authors>ESFA</Authors>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>Package to create a Swagger Document for Azure Functions V2</Description>
