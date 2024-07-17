@@ -28,9 +28,9 @@ stages:
       parameters:
         SolutionBaseName: $(SolutionBaseName)
         BuildPlatform: 'any cpu'
-        DotNetCoreVersion: 8.0.303
+        DotNetCoreVersion: 8.x
         BuildConfiguration: 'release'
-        TestSuffix: UnitTests
+        TestSuffix: Tests
     - template: AzureDevOpsTemplates\Build\StepTemplates\dfc-dotnetcore-nuget-pack.yml@dfc-devops
       parameters:
         SolutionBaseName: $(SolutionBaseName)
@@ -43,6 +43,7 @@ stages:
     displayName: Clean artifacts directory
     workspace:
       clean: all
+
   - deployment: PublishNugetPackage
     dependsOn: CleanArtifacts
     environment: LiveService_NUGET
@@ -50,10 +51,21 @@ stages:
       runOnce:
         deploy:
           steps:
+          - checkout: self
+            clean: true
+            persistCredentials: true
+
+          - script: |
+              git config --global user.email "careersdevops@education.gov.uk"
+              git config --global user.name "Automated tag from build"
+              git tag -a v$(Build.BuildNumber) -m "Automated tag of $(Build.BuildNumber) from build server"
+              git push --tags
+            displayName: Tag release
+
           - task: NuGetCommand@2
             displayName: 'NuGet push'
             inputs:
               command: push
               packagesToPush: '$(Pipeline.Workspace)\$(SolutionBaseName).Nuget\*.nupkg;!$(Pipeline.Workspace)\$(SolutionBaseName).Nuget\*.symbols.nupkg'
-              nuGetFeedType: external
-              publishFeedCredentials: 'DFC Nuget'
+              nuGetFeedType: internal
+              publishVstsFeed: NationalCareersService
