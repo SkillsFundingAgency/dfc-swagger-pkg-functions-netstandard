@@ -1,0 +1,863 @@
+{
+  "settings": {
+    "components": {
+      "code": true,
+      "binaries": false
+    },
+    "targetId": "",
+    "targetDisplayName": ".NET 8.0"
+  },
+  "analysisStartTime": "2024-07-17T09:39:57.9624961Z",
+  "analysisEndTime": "2024-07-17T09:40:48.5921776Z",
+  "privacyModeHelpUrl": "https://go.microsoft.com/fwlink/?linkid=2270980",
+  "stats": {
+    "summary": {
+      "projects": 2,
+      "issues": 3,
+      "incidents": 36,
+      "effort": 36
+    },
+    "charts": {
+      "severity": {
+        "Mandatory": 35,
+        "Optional": 1,
+        "Potential": 0,
+        "Information": 0
+      },
+      "category": {
+        "Project": 2,
+        "NuGet": 1,
+        "Api": 33
+      }
+    }
+  },
+  "projects": [
+    {
+      "path": "DFC.Swagger.Standard\\DFC.Swagger.Standard.csproj",
+      "startingProject": true,
+      "issues": 1,
+      "storyPoints": 1,
+      "ruleInstances": [
+        {
+          "incidentId": "faa6904b-3ccc-4a42-8371-6428b5bd2450",
+          "ruleId": "Project.0002",
+          "projectPath": "DFC.Swagger.Standard\\DFC.Swagger.Standard.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard\\DFC.Swagger.Standard.csproj",
+            "snippet": "Current: netstandard2.0\nNew: net8.0",
+            "protectedSnippet": "Current: netstandard2.0\nNew: net8.0"
+          }
+        }
+      ]
+    },
+    {
+      "path": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+      "startingProject": true,
+      "issues": 3,
+      "storyPoints": 35,
+      "ruleInstances": [
+        {
+          "incidentId": "a449e82c-2976-42f4-9cf3-8bb86a7e9679",
+          "ruleId": "NuGet.0005",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+            "snippet": "Microsoft.AspNetCore.Http, 2.2.0\n\nRecommendation:\n\nThis package has been deprecated as part of the .NET Package Deprecation effort. You can learn more about it from https://github.com/dotnet/announcements/issues/217",
+            "protectedSnippet": "Microsoft.AspNetCore.Http, 2.2.0\n\nRecommendation:\n\nThis package has been deprecated as part of the .NET Package Deprecation effort. You can learn more about it from https://github.com/dotnet/announcements/issues/217",
+            "label": "Microsoft.AspNetCore.Http 2.2.0"
+          }
+        },
+        {
+          "incidentId": "67c4cb34-40bd-43d6-ad81-c09492261d84",
+          "ruleId": "Project.0002",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+            "snippet": "Current: netcoreapp2.1\nNew: net8.0",
+            "protectedSnippet": "Current: netcoreapp2.1\nNew: net8.0"
+          }
+        },
+        {
+          "incidentId": "acadd70c-7a19-40e4-ae2a-76271748f977",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Test",
+            "protectedSnippet": "M:NUnit.Framework.TestAttribute.#ctor",
+            "label": "M:NUnit.Framework.TestAttribute.#ctor",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.testattribute.testattribute",
+                "isCustom": false
+              }
+            ],
+            "line": 97,
+            "column": 9
+          }
+        },
+        {
+          "incidentId": "27d2d355-ada6-44bb-b204-85fb9a21ab65",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Test",
+            "protectedSnippet": "T:NUnit.Framework.TestAttribute",
+            "label": "T:NUnit.Framework.TestAttribute",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.testattribute",
+                "isCustom": false
+              }
+            ],
+            "line": 42,
+            "column": 9
+          }
+        },
+        {
+          "incidentId": "5d8513ed-24e3-4dbb-8d8c-41d04ef5fcd0",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "_request = new DefaultHttpRequest(new DefaultHttpContext())\r\n            {\r\n                ContentType = \u0022application/json\u0022,\r\n            };",
+            "protectedSnippet": "M:Microsoft.AspNetCore.Http.Internal.DefaultHttpRequest.#ctor(Microsoft.AspNetCore.Http.HttpContext)",
+            "label": "M:Microsoft.AspNetCore.Http.Internal.DefaultHttpRequest.#ctor(Microsoft.AspNetCore.Http.HttpContext)",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.http.internal.defaulthttprequest.defaulthttprequest",
+                "isCustom": false
+              }
+            ],
+            "line": 23,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "09da3e8f-2669-4a8a-a7d2-8cf00bd2de8f",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Assert.Throws\u003CArgumentNullException\u003E(() =\u003E\r\n                _swaggerDocumentGenerator\r\n                    .GenerateSwaggerDocument(_request, ApiTitle, ApiDescription, null, ApiVersion, _assembly));",
+            "protectedSnippet": "T:NUnit.Framework.Assert",
+            "label": "T:NUnit.Framework.Assert",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.assert",
+                "isCustom": false
+              }
+            ],
+            "line": 70,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "e83c8f9e-2fbe-45f7-8ce8-de4a33150e4f",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "_request = new DefaultHttpRequest(new DefaultHttpContext())\r\n            {\r\n                ContentType = \u0022application/json\u0022,\r\n            };",
+            "protectedSnippet": "T:Microsoft.AspNetCore.Http.Internal.DefaultHttpRequest",
+            "label": "T:Microsoft.AspNetCore.Http.Internal.DefaultHttpRequest",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.http.internal.defaulthttprequest",
+                "isCustom": false
+              }
+            ],
+            "line": 23,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "77adf958-40b7-47b3-af67-ee8fdaf99cca",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Assert.Throws\u003CArgumentNullException\u003E(() =\u003E\r\n                _swaggerDocumentGenerator\r\n                    .GenerateSwaggerDocument(_request, ApiTitle, ApiDescription, ApiDefinitionName, ApiVersion, null));",
+            "protectedSnippet": "M:NUnit.Framework.Assert.Throws\u0060\u00601(NUnit.Framework.TestDelegate)",
+            "label": "M:NUnit.Framework.Assert.Throws\u0060\u00601(NUnit.Framework.TestDelegate)",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.assert.throws",
+                "isCustom": false
+              }
+            ],
+            "line": 92,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "3d34aba0-4890-4481-a12a-b72c14dce6a8",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Test",
+            "protectedSnippet": "T:NUnit.Framework.TestAttribute",
+            "label": "T:NUnit.Framework.TestAttribute",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.testattribute",
+                "isCustom": false
+              }
+            ],
+            "line": 53,
+            "column": 9
+          }
+        },
+        {
+          "incidentId": "a45a150b-4bcf-477e-bf32-20778e4ca925",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Test",
+            "protectedSnippet": "M:NUnit.Framework.TestAttribute.#ctor",
+            "label": "M:NUnit.Framework.TestAttribute.#ctor",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.testattribute.testattribute",
+                "isCustom": false
+              }
+            ],
+            "line": 30,
+            "column": 9
+          }
+        },
+        {
+          "incidentId": "5b3647ec-e2ee-4c95-b029-2be753d4ec09",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "_request = new DefaultHttpRequest(new DefaultHttpContext())\r\n            {\r\n                ContentType = \u0022application/json\u0022,\r\n            };",
+            "protectedSnippet": "P:Microsoft.AspNetCore.Http.Internal.DefaultHttpRequest.ContentType",
+            "label": "P:Microsoft.AspNetCore.Http.Internal.DefaultHttpRequest.ContentType",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/microsoft.aspnetcore.http.internal.defaulthttprequest.contenttype",
+                "isCustom": false
+              }
+            ],
+            "line": 23,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "9bee12cd-b22e-4f97-9220-cd524fb93ae1",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Assert.IsNotNull(response);",
+            "protectedSnippet": "T:NUnit.Framework.Assert",
+            "label": "T:NUnit.Framework.Assert",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.assert",
+                "isCustom": false
+              }
+            ],
+            "line": 103,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "0fb8f61e-4ea4-4c72-ba44-c2d952b2ad94",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Assert.Throws\u003CArgumentNullException\u003E(() =\u003E\r\n                _swaggerDocumentGenerator\r\n                    .GenerateSwaggerDocument(_request, ApiTitle, ApiDescription, ApiDefinitionName, null, _assembly));",
+            "protectedSnippet": "T:NUnit.Framework.Assert",
+            "label": "T:NUnit.Framework.Assert",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.assert",
+                "isCustom": false
+              }
+            ],
+            "line": 81,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "c6a8939c-f3a5-467e-a874-64590fea44cd",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Assert.Throws\u003CArgumentNullException\u003E(() =\u003E\r\n                _swaggerDocumentGenerator\r\n                    .GenerateSwaggerDocument(_request, ApiTitle, ApiDescription, null, ApiVersion, _assembly));",
+            "protectedSnippet": "M:NUnit.Framework.Assert.Throws\u0060\u00601(NUnit.Framework.TestDelegate)",
+            "label": "M:NUnit.Framework.Assert.Throws\u0060\u00601(NUnit.Framework.TestDelegate)",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.assert.throws",
+                "isCustom": false
+              }
+            ],
+            "line": 70,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "fb977463-db42-4e49-b8ef-4db55abb2d5a",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "SetUp",
+            "protectedSnippet": "T:NUnit.Framework.SetUpAttribute",
+            "label": "T:NUnit.Framework.SetUpAttribute",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.setupattribute",
+                "isCustom": false
+              }
+            ],
+            "line": 19,
+            "column": 9
+          }
+        },
+        {
+          "incidentId": "0bb19e5a-e125-4856-837f-50a4dff1a76f",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Test",
+            "protectedSnippet": "T:NUnit.Framework.TestAttribute",
+            "label": "T:NUnit.Framework.TestAttribute",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.testattribute",
+                "isCustom": false
+              }
+            ],
+            "line": 97,
+            "column": 9
+          }
+        },
+        {
+          "incidentId": "9c90a6a0-ce83-4a71-986a-d92899eab2d9",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Assert.IsNotNull(response);",
+            "protectedSnippet": "M:NUnit.Framework.Assert.IsNotNull(System.Object)",
+            "label": "M:NUnit.Framework.Assert.IsNotNull(System.Object)",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.assert.isnotnull",
+                "isCustom": false
+              }
+            ],
+            "line": 103,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "a6b06e80-f56e-4785-bd1c-288286dbb37c",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Assert.Throws\u003CArgumentNullException\u003E(() =\u003E\r\n                _swaggerDocumentGenerator\r\n                    .GenerateSwaggerDocument(_request, ApiTitle, ApiDescription, ApiDefinitionName, ApiVersion, null));",
+            "protectedSnippet": "T:NUnit.Framework.Assert",
+            "label": "T:NUnit.Framework.Assert",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.assert",
+                "isCustom": false
+              }
+            ],
+            "line": 92,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "8abb7b9c-e09d-4d4a-8fa8-0551db819903",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Test",
+            "protectedSnippet": "M:NUnit.Framework.TestAttribute.#ctor",
+            "label": "M:NUnit.Framework.TestAttribute.#ctor",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.testattribute.testattribute",
+                "isCustom": false
+              }
+            ],
+            "line": 64,
+            "column": 9
+          }
+        },
+        {
+          "incidentId": "2077f068-3bb5-4b7a-bfe2-2f5dad1a5636",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Test",
+            "protectedSnippet": "M:NUnit.Framework.TestAttribute.#ctor",
+            "label": "M:NUnit.Framework.TestAttribute.#ctor",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.testattribute.testattribute",
+                "isCustom": false
+              }
+            ],
+            "line": 42,
+            "column": 9
+          }
+        },
+        {
+          "incidentId": "01d75dc2-f9ce-4b4d-8acb-68c04bf1e6d0",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "SetUp",
+            "protectedSnippet": "M:NUnit.Framework.SetUpAttribute.#ctor",
+            "label": "M:NUnit.Framework.SetUpAttribute.#ctor",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.setupattribute.setupattribute",
+                "isCustom": false
+              }
+            ],
+            "line": 19,
+            "column": 9
+          }
+        },
+        {
+          "incidentId": "34fd4712-3326-4f27-bca6-4544b0a17867",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Test",
+            "protectedSnippet": "M:NUnit.Framework.TestAttribute.#ctor",
+            "label": "M:NUnit.Framework.TestAttribute.#ctor",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.testattribute.testattribute",
+                "isCustom": false
+              }
+            ],
+            "line": 53,
+            "column": 9
+          }
+        },
+        {
+          "incidentId": "5d5812c3-9c15-41f7-944a-e04ca8fc4ae4",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Assert.Throws\u003CArgumentNullException\u003E(() =\u003E\r\n                _swaggerDocumentGenerator\r\n                    .GenerateSwaggerDocument(_request, null, ApiDescription, ApiDefinitionName, ApiVersion, _assembly));",
+            "protectedSnippet": "T:NUnit.Framework.Assert",
+            "label": "T:NUnit.Framework.Assert",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.assert",
+                "isCustom": false
+              }
+            ],
+            "line": 48,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "e0320651-066c-4633-b57d-e775cab2c3a3",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Assert.Throws\u003CArgumentNullException\u003E(() =\u003E\r\n                _swaggerDocumentGenerator\r\n                    .GenerateSwaggerDocument(null, ApiTitle, ApiDescription, ApiDefinitionName, ApiVersion, _assembly));",
+            "protectedSnippet": "M:NUnit.Framework.Assert.Throws\u0060\u00601(NUnit.Framework.TestDelegate)",
+            "label": "M:NUnit.Framework.Assert.Throws\u0060\u00601(NUnit.Framework.TestDelegate)",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.assert.throws",
+                "isCustom": false
+              }
+            ],
+            "line": 37,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "c444fada-f501-4859-978e-efbb5579af42",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Test",
+            "protectedSnippet": "T:NUnit.Framework.TestAttribute",
+            "label": "T:NUnit.Framework.TestAttribute",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.testattribute",
+                "isCustom": false
+              }
+            ],
+            "line": 86,
+            "column": 9
+          }
+        },
+        {
+          "incidentId": "102c8e92-5ff4-4f8a-b072-448d1de2b35d",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Assert.Throws\u003CArgumentNullException\u003E(() =\u003E\r\n                _swaggerDocumentGenerator\r\n                    .GenerateSwaggerDocument(null, ApiTitle, ApiDescription, ApiDefinitionName, ApiVersion, _assembly));",
+            "protectedSnippet": "T:NUnit.Framework.Assert",
+            "label": "T:NUnit.Framework.Assert",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.assert",
+                "isCustom": false
+              }
+            ],
+            "line": 37,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "e837d9c9-e227-453d-be00-5aec9fdaa1ba",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Test",
+            "protectedSnippet": "M:NUnit.Framework.TestAttribute.#ctor",
+            "label": "M:NUnit.Framework.TestAttribute.#ctor",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.testattribute.testattribute",
+                "isCustom": false
+              }
+            ],
+            "line": 86,
+            "column": 9
+          }
+        },
+        {
+          "incidentId": "078cb16f-3196-4df3-81b5-b89e29342ebe",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Assert.Throws\u003CArgumentNullException\u003E(() =\u003E\r\n                _swaggerDocumentGenerator\r\n                    .GenerateSwaggerDocument(_request, ApiTitle, null, ApiDefinitionName, ApiVersion, _assembly));",
+            "protectedSnippet": "T:NUnit.Framework.Assert",
+            "label": "T:NUnit.Framework.Assert",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.assert",
+                "isCustom": false
+              }
+            ],
+            "line": 59,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "302f7658-b256-4dc4-aa2a-684238c4090b",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Test",
+            "protectedSnippet": "T:NUnit.Framework.TestAttribute",
+            "label": "T:NUnit.Framework.TestAttribute",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.testattribute",
+                "isCustom": false
+              }
+            ],
+            "line": 30,
+            "column": 9
+          }
+        },
+        {
+          "incidentId": "b49be9e5-f188-4933-bac0-220eb1f311f8",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Assert.Throws\u003CArgumentNullException\u003E(() =\u003E\r\n                _swaggerDocumentGenerator\r\n                    .GenerateSwaggerDocument(_request, null, ApiDescription, ApiDefinitionName, ApiVersion, _assembly));",
+            "protectedSnippet": "M:NUnit.Framework.Assert.Throws\u0060\u00601(NUnit.Framework.TestDelegate)",
+            "label": "M:NUnit.Framework.Assert.Throws\u0060\u00601(NUnit.Framework.TestDelegate)",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.assert.throws",
+                "isCustom": false
+              }
+            ],
+            "line": 48,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "1c788c3d-ceb9-451a-b51e-ec2620366d2f",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Test",
+            "protectedSnippet": "M:NUnit.Framework.TestAttribute.#ctor",
+            "label": "M:NUnit.Framework.TestAttribute.#ctor",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.testattribute.testattribute",
+                "isCustom": false
+              }
+            ],
+            "line": 75,
+            "column": 9
+          }
+        },
+        {
+          "incidentId": "8dcb714c-3eed-4ed1-97e3-7a360552499c",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Test",
+            "protectedSnippet": "T:NUnit.Framework.TestAttribute",
+            "label": "T:NUnit.Framework.TestAttribute",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.testattribute",
+                "isCustom": false
+              }
+            ],
+            "line": 75,
+            "column": 9
+          }
+        },
+        {
+          "incidentId": "daa12411-7f45-45bf-9a2f-11097f80c94c",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Assert.Throws\u003CArgumentNullException\u003E(() =\u003E\r\n                _swaggerDocumentGenerator\r\n                    .GenerateSwaggerDocument(_request, ApiTitle, ApiDescription, ApiDefinitionName, null, _assembly));",
+            "protectedSnippet": "M:NUnit.Framework.Assert.Throws\u0060\u00601(NUnit.Framework.TestDelegate)",
+            "label": "M:NUnit.Framework.Assert.Throws\u0060\u00601(NUnit.Framework.TestDelegate)",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.assert.throws",
+                "isCustom": false
+              }
+            ],
+            "line": 81,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "68c3227e-cfd9-41ae-b38f-1287f7662dd3",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Assert.Throws\u003CArgumentNullException\u003E(() =\u003E\r\n                _swaggerDocumentGenerator\r\n                    .GenerateSwaggerDocument(_request, ApiTitle, null, ApiDefinitionName, ApiVersion, _assembly));",
+            "protectedSnippet": "M:NUnit.Framework.Assert.Throws\u0060\u00601(NUnit.Framework.TestDelegate)",
+            "label": "M:NUnit.Framework.Assert.Throws\u0060\u00601(NUnit.Framework.TestDelegate)",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.assert.throws",
+                "isCustom": false
+              }
+            ],
+            "line": 59,
+            "column": 12
+          }
+        },
+        {
+          "incidentId": "e1654a4c-c499-453f-babc-10af43de9b8c",
+          "ruleId": "Api.0001",
+          "projectPath": "DFC.Swagger.Standard.Tests\\DFC.Swagger.Standard.Tests.csproj",
+          "state": "Active",
+          "location": {
+            "kind": "File",
+            "path": "DFC.Swagger.Standard.Tests\\SwaggerDocumentGeneratorTests.cs",
+            "snippet": "Test",
+            "protectedSnippet": "T:NUnit.Framework.TestAttribute",
+            "label": "T:NUnit.Framework.TestAttribute",
+            "links": [
+              {
+                "title": "API documentation",
+                "url": "https://learn.microsoft.com/dotnet/api/nunit.framework.testattribute",
+                "isCustom": false
+              }
+            ],
+            "line": 64,
+            "column": 9
+          }
+        }
+      ]
+    }
+  ],
+  "rules": {
+    "Project.0002": {
+      "id": "Project.0002",
+      "description": "Project\u0027s target framework(s) needs to be changed to the new target framework that you selected for this upgrade.\n\nDuring upgrade target framework will be adjusted to correspinding platform when applicable. In some cases project would result in multiple target frameworks after the upgrade if it was using features that now have their own platforms in moderrn .NET frameworks (windows, iOS, Android etc).",
+      "label": "Project\u0027s target framework(s) needs to be changed",
+      "severity": "Mandatory",
+      "effort": 1,
+      "links": [
+        {
+          "title": "Overview of porting from .NET Framework to .NET",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2265227",
+          "isCustom": false
+        },
+        {
+          "title": ".NET project SDKs",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2265226",
+          "isCustom": false
+        }
+      ]
+    },
+    "NuGet.0005": {
+      "id": "NuGet.0005",
+      "description": "NuGet package is deprecated.\n\nGo to its documentation and if there is a guidance for replacement of functionality provided by this package.",
+      "label": "NuGet package is deprecated",
+      "severity": "Optional",
+      "effort": 1,
+      "links": [
+        {
+          "url": "https://go.microsoft.com/fwlink/?linkid=2262531",
+          "isCustom": false
+        }
+      ]
+    },
+    "Api.0001": {
+      "id": "Api.0001",
+      "description": "API does not exist in the selected version of .NET. See breaking changes documentation for alternative or replacement functionality.",
+      "label": "API does not exist",
+      "severity": "Mandatory",
+      "effort": 1,
+      "links": [
+        {
+          "title": "Breaking changes in .NET",
+          "url": "https://go.microsoft.com/fwlink/?linkid=2262679",
+          "isCustom": false
+        }
+      ]
+    }
+  }
+}
