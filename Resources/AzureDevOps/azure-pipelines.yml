@@ -12,7 +12,7 @@ resources:
   - repository: dfc-devops
     type: github
     name: SkillsFundingAgency/dfc-devops
-    ref: refs/tags/v1.16.0
+    ref: refs/tags/v1.16.1
     endpoint: 'GitHub (ESFA)'
 
 pool:
@@ -32,6 +32,7 @@ stages:
         SolutionBaseName: $(SolutionBaseName)
         BuildPlatform: 'any cpu'
         DotNetCoreVersion: 8.x
+        GitVersionVersion: 5.12.x
         BuildConfiguration: 'release'
         TestSuffix: Tests
     - template: AzureDevOpsTemplates\Build\StepTemplates\dfc-dotnetcore-nuget-pack.yml@dfc-devops
