@@ -100,8 +100,7 @@ namespace DFC.Swagger.Standard.Tests
         {
             var response =
                 _swaggerDocumentGenerator.GenerateSwaggerDocument(_request, ApiTitle, ApiDescription, ApiDefinitionName, ApiVersion, _assembly);
-
-            Assert.IsNotNull(response);
+            Assert.That(response, Is.Not.Null);
         }
     }
 }
