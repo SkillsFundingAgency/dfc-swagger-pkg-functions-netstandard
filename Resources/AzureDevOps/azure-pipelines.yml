@@ -1,0 +1,74 @@
+variables:
+    SolutionBaseName: 'DFC.Swagger.Standard'
+    BuildPlatform: 'any cpu'
+    BuildConfiguration: 'release'
+
+trigger:
+- master
+
+resources:
+  repositories:
+  - repository: self
+  - repository: dfc-devops
+    type: github
+    name: SkillsFundingAgency/dfc-devops
+    ref: refs/tags/v1.16.0
+    endpoint: 'GitHub (ESFA)'
+
+pool:
+  name: NCS - CI and CD
+  demands:
+  - msbuild
+  - visualstudio
+
+stages:
+- stage: Build
+  displayName: Build, Test and Analyze
+  jobs:
+  - job: BuildTestAndAnalyze
+    steps:
+    - template: AzureDevOpsTemplates\Build\StepTemplates\dfc-dotnetcore-build.yml@dfc-devops
+      parameters:
+        SolutionBaseName: $(SolutionBaseName)
+        BuildPlatform: 'any cpu'
+        DotNetCoreVersion: 8.x
+        BuildConfiguration: 'release'
+        TestSuffix: Tests
+    - template: AzureDevOpsTemplates\Build\StepTemplates\dfc-dotnetcore-nuget-pack.yml@dfc-devops
+      parameters:
+        SolutionBaseName: $(SolutionBaseName)
+
+- stage: PublishPackage
+  displayName: Publish Package to NuGet
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  jobs:
+  - job: CleanArtifacts
+    displayName: Clean artifacts directory
+    workspace:
+      clean: all
+
+  - deployment: PublishNugetPackage
+    dependsOn: CleanArtifacts
+    environment: LiveService_NUGET
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+          - checkout: self
+            clean: true
+            persistCredentials: true
+
+          - script: |
+              git config --global user.email "careersdevops@education.gov.uk"
+              git config --global user.name "Automated tag from build"
+              git tag -a v$(Build.BuildNumber) -m "Automated tag of $(Build.BuildNumber) from build server"
+              git push --tags
+            displayName: Tag release
+
+          - task: NuGetCommand@2
+            displayName: 'NuGet push'
+            inputs:
+              command: push
+              packagesToPush: '$(Pipeline.Workspace)\$(SolutionBaseName).Nuget\*.nupkg;!$(Pipeline.Workspace)\$(SolutionBaseName).Nuget\*.symbols.nupkg'
+              nuGetFeedType: internal
+              publishVstsFeed: NationalCareersService
