@@ -3,6 +3,7 @@ using DFC.JSON.Standard.Attributes;
 using DFC.Swagger.Standard.Annotations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.WebJobs;
 using Newtonsoft.Json;
 using System;
@@ -14,6 +15,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using HttpTriggerAttribute = Microsoft.Azure.Functions.Worker.HttpTriggerAttribute;
 
 namespace DFC.Swagger.Standard
 {
@@ -81,7 +83,7 @@ namespace DFC.Swagger.Standard
             dynamic paths = new ExpandoObject();
             var methods = assembly.GetTypes()
                 .SelectMany(t => t.GetMethods())
-                .Where(m => m.GetCustomAttributes(typeof(FunctionNameAttribute), false).Length > 0).ToArray();
+                .Where(m => m.GetCustomAttributes(typeof(FunctionAttribute), false).Length > 0).ToArray();
             foreach (MethodInfo methodInfo in methods)
             {
                 //hide any disabled methods
@@ -91,7 +93,7 @@ namespace DFC.Swagger.Standard
 
                 var route = pathPrefix;
 
-                var functionAttr = (FunctionNameAttribute)methodInfo.GetCustomAttributes(typeof(FunctionNameAttribute), false)
+                var functionAttr = (FunctionAttribute)methodInfo.GetCustomAttributes(typeof(FunctionAttribute), false)
                     .Single();
 
                 if (functionAttr.Name == apiDefinitionName) continue;
