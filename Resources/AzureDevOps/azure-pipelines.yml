@@ -62,7 +62,7 @@ stages:
         versionEnvVar: 'PackageVersion'
 
     - script: dir $(Pipeline.Workspace)\$(SolutionBaseName).Nuget
-      displayName: 'List contents of NuGet directory
+      displayName: 'List contents of NuGet directory'
 
 - stage: PublishPackage
   displayName: Publish Package to NuGet
