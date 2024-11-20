@@ -61,6 +61,9 @@ stages:
         versioningScheme: 'byEnvVar'
         versionEnvVar: 'PackageVersion'
 
+    - script: dir $(Pipeline.Workspace)\$(SolutionBaseName).Nuget
+      displayName: 'List contents of NuGet directory
+
 - stage: PublishPackage
   displayName: Publish Package to NuGet
   condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')))
