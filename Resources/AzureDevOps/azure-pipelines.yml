@@ -52,10 +52,14 @@ stages:
         echo ##vso[task.setvariable variable=PackageVersion]!VERSION!
       displayName: 'Extract version from branch name'
 
-    - template: AzureDevOpsTemplates\Build\StepTemplates\dfc-dotnetcore-nuget-pack.yml@dfc-devops
-      parameters:
-        SolutionBaseName: $(SolutionBaseName)
-        Version: $(PackageVersion)
+    - task: NuGetCommand@2
+      displayName: 'NuGet pack'
+      inputs:
+        command: 'pack'
+        packagesToPack: '$(Build.SourcesDirectory)/$(SolutionBaseName)/$(SolutionBaseName).csproj'
+        packDestination: '$(Build.ArtifactStagingDirectory)'
+        versioningScheme: 'byEnvVar'
+        versionEnvVar: 'PackageVersion'
 
 - stage: PublishPackage
   displayName: Publish Package to NuGet
