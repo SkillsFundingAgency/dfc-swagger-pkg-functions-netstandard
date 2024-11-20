@@ -1,3 +1,26 @@
+variables:
+    SolutionBaseName: 'DFC.Swagger.Standard'
+    BuildPlatform: 'any cpu'
+    BuildConfiguration: 'release'
+
+trigger:
+- master
+
+resources:
+  repositories:
+  - repository: self
+  - repository: dfc-devops
+    type: github
+    name: SkillsFundingAgency/dfc-devops
+    ref: refs/tags/v1.16.1
+    endpoint: 'GitHub (ESFA)'
+
+pool:
+  name: NCS - CI and CD
+  demands:
+  - msbuild
+  - visualstudio
+
 stages:
 - stage: Build
   displayName: Build, Test and Analyze
