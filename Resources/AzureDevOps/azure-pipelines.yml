@@ -1,26 +1,3 @@
-variables:
-    SolutionBaseName: 'DFC.Swagger.Standard'
-    BuildPlatform: 'any cpu'
-    BuildConfiguration: 'release'
-
-trigger:
-- master
-
-resources:
-  repositories:
-  - repository: self
-  - repository: dfc-devops
-    type: github
-    name: SkillsFundingAgency/dfc-devops
-    ref: refs/tags/v1.16.1
-    endpoint: 'GitHub (ESFA)'
-
-pool:
-  name: NCS - CI and CD
-  demands:
-  - msbuild
-  - visualstudio
-
 stages:
 - stage: Build
   displayName: Build, Test and Analyze
@@ -35,9 +12,24 @@ stages:
         GitVersionVersion: 5.12.x
         BuildConfiguration: 'release'
         TestSuffix: Tests
+
+    - script: |
+        echo "##[group]Extracting version from branch name"
+        if [[ "$(Build.SourceBranch)" =~ ^refs/heads/release/([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+          VERSION=${BASH_REMATCH[1]}
+          echo "##vso[task.setvariable variable=PackageVersion]$VERSION"
+          echo "Extracted version: $VERSION"
+        else
+          echo "##vso[task.logissue type=error]Branch name does not match the expected pattern 'release/x.x.x'"
+          exit 1
+        fi
+        echo "##[endgroup]"
+      displayName: 'Extract version from branch name'
+
     - template: AzureDevOpsTemplates\Build\StepTemplates\dfc-dotnetcore-nuget-pack.yml@dfc-devops
       parameters:
         SolutionBaseName: $(SolutionBaseName)
+        Version: $(PackageVersion)
 
 - stage: PublishPackage
   displayName: Publish Package to NuGet
