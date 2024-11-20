@@ -125,7 +125,7 @@ namespace DFC.Swagger.Standard
                     operation.operationId = ToTitleCase(functionAttr.Name);
                     operation.produces = new[] { "application/json" };
                     operation.consumes = new[] { "application/json" };
-                    operation.parameters = GenerateFunctionParametersSignature(methodInfo, route, doc);
+                    operation.parameters = GenerateFunctionParametersSignature(methodInfo, route, doc, apiTitle);
 
                     // Summary is title
                     operation.summary = GetFunctionName(methodInfo, functionAttr.Name);
@@ -252,7 +252,7 @@ namespace DFC.Swagger.Standard
             return responses;
         }
 
-        private List<object> GenerateFunctionParametersSignature(MethodInfo methodInfo, string route, dynamic doc)
+        private List<object> GenerateFunctionParametersSignature(MethodInfo methodInfo, string route, dynamic doc, String apiDisplayName)
         {
             var parameterSignatures = new List<object>();
 
@@ -267,15 +267,19 @@ namespace DFC.Swagger.Standard
                 parameterSignatures.Add(opHeaderParam);
             }
 
-            if (IncludeSubcontractorId)
+            dynamic opHeaderParam2 = new ExpandoObject();
+            opHeaderParam2.name = "SubcontracterId";
+            opHeaderParam2.description = "The subcontractor id";
+            opHeaderParam2.@in = "header";
+            opHeaderParam2.type = "string";
+
+            if (apiDisplayName.ToLower().Contains("outcomes"))
             {
-                dynamic opHeaderParam2 = new ExpandoObject();
-                opHeaderParam2.name = "SubcontractorId";
-                opHeaderParam2.description = "The subcontractor id";
-                opHeaderParam2.@in = "header";
+                opHeaderParam2.required = true;
+            }
+            else
+            {
                 opHeaderParam2.required = false;
-                opHeaderParam2.type = "string";
-                parameterSignatures.Add(opHeaderParam2);
             }
 
             var postBodyAttr = methodInfo.GetCustomAttributes().FirstOrDefault(attr => attr is PostRequestBodyAttribute);
