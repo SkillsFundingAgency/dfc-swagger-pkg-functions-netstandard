@@ -129,7 +129,7 @@ namespace DFC.Swagger.Standard
 
                     // Summary is title
                     operation.summary = GetFunctionName(methodInfo, functionAttr.Name);
-                    // Verbose description`
+                    // Verbose description
                     operation.description = GetFunctionDescription(methodInfo, functionAttr.Name);
 
                     operation.responses = GenerateResponseParameterSignature(methodInfo, doc);
