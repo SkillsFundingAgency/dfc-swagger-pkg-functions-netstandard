@@ -37,20 +37,25 @@ stages:
         TestSuffix: Tests
 
     - script: |
-    echo Extracting version from branch name
-    setlocal enabledelayedexpansion
-    set "branchName=$(Build.SourceBranch)"
-    echo Branch name: !branchName!
-    for /f "tokens=3 delims=/" %%a in ("!branchName!") do (
-      set "VERSION=%%a"
-    )
-    if not defined VERSION (
-      echo ##vso[task.logissue type=error]Branch name does not match the expected pattern 'release/x.x.x'
-      exit /b 1
-    )
-    echo Extracted version: !VERSION!
-    echo ##vso[task.setvariable variable=PackageVersion]!VERSION!
-  displayName: 'Extract version from branch name'
+        echo Extracting version from branch name
+        setlocal enabledelayedexpansion
+        set "branchName=$(Build.SourceBranch)"
+        echo Branch name: !branchName!
+        for /f "tokens=3 delims=/" %%a in ("!branchName!") do (
+          set "VERSION=%%a"
+        )
+        if not defined VERSION (
+          echo ##vso[task.logissue type=error]Branch name does not match the expected pattern 'release/x.x.x'
+          exit /b 1
+        )
+        echo Extracted version: !VERSION!
+        echo ##vso[task.setvariable variable=PackageVersion]!VERSION!
+      displayName: 'Extract version from branch name'
+
+    - template: AzureDevOpsTemplates\Build\StepTemplates\dfc-dotnetcore-nuget-pack.yml@dfc-devops
+      parameters:
+        SolutionBaseName: $(SolutionBaseName)
+        Version: $(PackageVersion)
 
 - stage: PublishPackage
   displayName: Publish Package to NuGet
