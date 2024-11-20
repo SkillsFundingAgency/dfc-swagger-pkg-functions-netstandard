@@ -97,6 +97,6 @@ stages:
             displayName: 'NuGet push'
             inputs:
               command: push
-              packagesToPush: '$(Pipeline.Workspace)\$(SolutionBaseName).Nuget\*.nupkg;!$(Pipeline.Workspace)\$(SolutionBaseName).Nuget\*.symbols.nupkg'
+              packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
               nuGetFeedType: internal
               publishVstsFeed: NationalCareersService
