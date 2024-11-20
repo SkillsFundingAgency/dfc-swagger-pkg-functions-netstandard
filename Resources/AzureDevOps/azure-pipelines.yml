@@ -1,7 +1,7 @@
 variables:
-    SolutionBaseName: 'DFC.Swagger.Standard'
-    BuildPlatform: 'any cpu'
-    BuildConfiguration: 'release'
+  SolutionBaseName: 'DFC.Swagger.Standard'
+  BuildPlatform: 'any cpu'
+  BuildConfiguration: 'release'
 
 trigger:
 - master
