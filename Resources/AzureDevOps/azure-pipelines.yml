@@ -70,7 +70,7 @@ stages:
         artifactName: 'drop'
         publishLocation: 'Container'
 
-    - script: dir $(Build.ArtifactStagingDirectory)\drop
+    - script: dir $(Build.ArtifactStagingDirectory)
       displayName: 'List contents after NuGet pack'
 
 - stage: PublishPackage
@@ -100,13 +100,13 @@ stages:
               git push --tags
             displayName: Tag release
 
-          - script: dir $(Build.ArtifactStagingDirectory)\drop
+          - script: dir $(Build.ArtifactStagingDirectory)]
             displayName: 'List contents of Artifact Staging Directory'
 
           - task: NuGetCommand@2
             displayName: 'NuGet push'
             inputs:
               command: push
-              packagesToPush: '$(Build.ArtifactStagingDirectory)/drop/*.nupkg'
+              packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
               nuGetFeedType: internal
               publishVstsFeed: NationalCareersService
