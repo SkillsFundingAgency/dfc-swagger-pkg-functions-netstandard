@@ -2,6 +2,7 @@ variables:
   SolutionBaseName: 'DFC.Swagger.Standard'
   BuildPlatform: 'any cpu'
   BuildConfiguration: 'release'
+  NuGet.UseLegacyFindFiles: true
 
 trigger:
 - master
@@ -63,6 +64,15 @@ stages:
         versioningScheme: 'byEnvVar'
         versionEnvVar: 'PackageVersion'
 
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: '$(Build.ArtifactStagingDirectory)'
+        artifactName: 'drop'
+        publishLocation: 'Container'
+
+    - script: dir $(Build.ArtifactStagingDirectory)
+      displayName: 'List contents after NuGet pack'
+
 - stage: PublishPackage
   displayName: Publish Package to NuGet
   condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')))
@@ -89,6 +99,9 @@ stages:
               git tag -a v$(Build.BuildNumber) -m "Automated tag of $(Build.BuildNumber) from build server"
               git push --tags
             displayName: Tag release
+
+          - script: dir $(Build.ArtifactStagingDirectory)
+            displayName: 'List contents of Artifact Staging Directory'
 
           - task: NuGetCommand@2
             displayName: 'NuGet push'
