@@ -107,6 +107,6 @@ stages:
             displayName: 'NuGet push'
             inputs:
               command: push
-              packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
+              packagesToPush: '$(Build.ArtifactStagingDirectory)/drop/*.nupkg'
               nuGetFeedType: internal
               publishVstsFeed: NationalCareersService
