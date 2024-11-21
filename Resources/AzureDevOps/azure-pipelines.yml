@@ -73,6 +73,12 @@ stages:
     - script: dir $(Build.ArtifactStagingDirectory)
       displayName: 'List contents after NuGet pack'
 
+    - script: copy E:\Build\_work\55\a\DFC.Swagger.Standard.*.nupkg $(Build.ArtifactStagingDirectory)
+      displayName: 'Copy package to Artifact Staging Directory'
+
+    - script: dir $(Build.ArtifactStagingDirectory)
+      displayName: 'List contents after copying package'
+
 - stage: PublishPackage
   displayName: Publish Package to NuGet
   condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'), startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')))
