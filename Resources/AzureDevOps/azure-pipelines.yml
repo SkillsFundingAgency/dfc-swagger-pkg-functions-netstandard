@@ -69,15 +69,10 @@ stages:
         pathToPublish: '$(Build.ArtifactStagingDirectory)'
         artifactName: 'drop'
         publishLocation: 'Container'
+        displayName: 'Publish Build Artifacts'
 
     - script: dir $(Build.ArtifactStagingDirectory)
       displayName: 'List contents after NuGet pack'
-
-    - script: copy E:\Build\_work\55\a\DFC.Swagger.Standard.*.nupkg $(Build.ArtifactStagingDirectory)
-      displayName: 'Copy package to Artifact Staging Directory'
-
-    - script: dir $(Build.ArtifactStagingDirectory)
-      displayName: 'List contents after copying package'
 
 - stage: PublishPackage
   displayName: Publish Package to NuGet
@@ -86,7 +81,7 @@ stages:
   - job: CleanArtifacts
     displayName: Clean artifacts directory
     workspace:
-      clean: all
+      clean: outputs
 
   - deployment: PublishNugetPackage
     dependsOn: CleanArtifacts
@@ -105,6 +100,14 @@ stages:
               git tag -a v$(Build.BuildNumber) -m "Automated tag of $(Build.BuildNumber) from build server"
               git push --tags
             displayName: Tag release
+
+          - task: DownloadBuildArtifacts@0
+            inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              artifactName: 'drop'
+              downloadPath: '$(Build.ArtifactStagingDirectory)'
+            displayName: 'Download Build Artifacts'
 
           - script: dir $(Build.ArtifactStagingDirectory)
             displayName: 'List contents of Artifact Staging Directory'
