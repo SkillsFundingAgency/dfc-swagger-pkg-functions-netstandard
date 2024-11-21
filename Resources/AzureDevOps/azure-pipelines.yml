@@ -100,7 +100,7 @@ stages:
               git push --tags
             displayName: Tag release
 
-          - script: dir $(Build.ArtifactStagingDirectory)]
+          - script: dir $(Build.ArtifactStagingDirectory)
             displayName: 'List contents of Artifact Staging Directory'
 
           - task: NuGetCommand@2
