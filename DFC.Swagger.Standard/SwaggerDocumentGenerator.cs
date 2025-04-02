@@ -268,7 +268,7 @@ namespace DFC.Swagger.Standard
             }
 
             dynamic opHeaderParam2 = new ExpandoObject();
-            opHeaderParam2.name = "SubcontracterId";
+            opHeaderParam2.name = "SubcontractorId";
             opHeaderParam2.description = "The subcontractor id";
             opHeaderParam2.@in = "header";
             opHeaderParam2.type = "string";
@@ -281,7 +281,7 @@ namespace DFC.Swagger.Standard
             {
                 opHeaderParam2.required = false;
             }
-
+            parameterSignatures.Add(opHeaderParam2);
             var postBodyAttr = methodInfo.GetCustomAttributes().FirstOrDefault(attr => attr is PostRequestBodyAttribute);
             if (postBodyAttr != null)
             {
