@@ -17,7 +17,7 @@ resources:
     endpoint: 'GitHub (ESFA)'
 
 pool:
-  name: NCS - CI and CD
+  name: dfc-dev-shared-build-mp
   demands:
   - msbuild
   - visualstudio
@@ -40,6 +40,11 @@ stages:
     - script: |
         setlocal enabledelayedexpansion
         set "branchName=$(Build.SourceBranch)"
+
+        if not "$(System.PullRequest.SourceBranch)"=="$(System.PullRequest.SourceBranch)" (
+          set "branchname=$(System.PullRequest.SourceBranch)"
+        )
+        
         echo Branch name: !branchName!
         :: Remove the 'refs/heads/' prefix
         set "branchName=!branchName:refs/heads/=!"
@@ -55,12 +60,13 @@ stages:
 
       displayName: 'Extract version from branch name'
 
-    - task: NuGetCommand@2
+    - task: DotNetCoreCLI@2
       displayName: 'NuGet pack'
       inputs:
         command: 'pack'
         packagesToPack: '$(Build.SourcesDirectory)/$(SolutionBaseName)/$(SolutionBaseName).csproj'
-        packDestination: '$(Build.ArtifactStagingDirectory)'
+        configuration: '$(BuildConfiguration)'
+        packDirectory: '$(Build.ArtifactStagingDirectory)'
         versioningScheme: 'byEnvVar'
         versionEnvVar: 'PackageVersion'
 
