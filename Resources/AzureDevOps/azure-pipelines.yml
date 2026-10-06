@@ -49,7 +49,7 @@ stages:
         }
 
         Write-Host "Extracted version: $version"
-        Write-Host "##vso[tasl.setvariable variable=PackageVersion]$version"
+        Write-Host "##vso[task.setvariable variable=PackageVersion]$version"
       displayName: 'Extract version from branch name'
 
     - task: DotNetCoreCLI@2
