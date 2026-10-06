@@ -55,12 +55,13 @@ stages:
 
       displayName: 'Extract version from branch name'
 
-    - task: NuGetCommand@2
+    - task: DotNetCoreCLI@2
       displayName: 'NuGet pack'
       inputs:
         command: 'pack'
         packagesToPack: '$(Build.SourcesDirectory)/$(SolutionBaseName)/$(SolutionBaseName).csproj'
-        packDestination: '$(Build.ArtifactStagingDirectory)'
+        configuration: '$(BuildConfiguration)'
+        packDirectory: '$(Build.ArtifactStagingDirectory)'
         versioningScheme: 'byEnvVar'
         versionEnvVar: 'PackageVersion'
 
