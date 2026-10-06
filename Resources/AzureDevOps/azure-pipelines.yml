@@ -41,8 +41,8 @@ stages:
         setlocal enabledelayedexpansion
         set "branchName=$(Build.SourceBranch)"
         echo Branch name: !branchName!
-        echo !branchName! | findtsr /b "refs/pull/" >nul
-        if !errorlevel! equ 0 (
+        set "prCheck=!branchName:refs/pull=!"
+        if not "!prCheck!"="!branchName!" (
           set "VERSION=0.0.0-pr.$(Build.BuildID)"
         ) else (
           set "branchName=!branchName:refs/heads/=!"
