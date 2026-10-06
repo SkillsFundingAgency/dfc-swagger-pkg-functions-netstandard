@@ -37,24 +37,19 @@ stages:
         BuildConfiguration: 'release'
         TestSuffix: Tests
 
-    - script: |
-        setlocal enabledelayedexpansion
-        set "branchName=$(Build.SourceBranch)"
-        echo Branch name: !branchName!
-        if "!branchName:0,10!"="refs/pull" (
-          set "VERSION=0.0.0-pr.$(Build.BuildID)"
-        ) else (
-          set "branchName=!branchName:refs/heads/=!"
-          set "VERSION=!branchName:release/=!"
-          if "!VERSION!"="!branchName" (
-            echo ##vso[task.logissue type=error]Branch name does not match the expected pattern 'release/x.x.x'
-            exit /b 1
-          )
-        )
-        
-        echo Extracted version: !VERSION!
-        echo ##vso[task.setvariable variable=PackageVersion]!VERSION!
+    - powershell: |
+        $branch = "$(Build.SourceBranch)"
+        Write-Host "Branch name: $branch"
 
+        if ($branch -like "refs/pull/*") {
+          $version = "0.0.0-pr.$(Build.BuildId)"
+        }
+        else {
+          $version = $branch -replace "refs/heads/release/", ""
+        }
+
+        Write-Host "Extracted version: $version"
+        Write-Host "##vso[tasl.setvariable variable=PackageVersion]$version"
       displayName: 'Extract version from branch name'
 
     - task: DotNetCoreCLI@2
