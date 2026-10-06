@@ -41,8 +41,7 @@ stages:
         setlocal enabledelayedexpansion
         set "branchName=$(Build.SourceBranch)"
         echo Branch name: !branchName!
-        set "prCheck=!branchName:refs/pull=!"
-        if not "!prCheck!"="!branchName!" (
+        if "!branchName:0,10!"="refs/pull" (
           set "VERSION=0.0.0-pr.$(Build.BuildID)"
         ) else (
           set "branchName=!branchName:refs/heads/=!"
