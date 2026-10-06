@@ -40,6 +40,11 @@ stages:
     - script: |
         setlocal enabledelayedexpansion
         set "branchName=$(Build.SourceBranch)"
+
+        if not "$(System.PullRequest.SourceBranch)"=="" (
+          set "branchname=$(System.PullRequest.SourceBranch)"
+        )
+        
         echo Branch name: !branchName!
         :: Remove the 'refs/heads/' prefix
         set "branchName=!branchName:refs/heads/=!"
