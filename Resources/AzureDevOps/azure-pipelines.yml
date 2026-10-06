@@ -41,7 +41,7 @@ stages:
         setlocal enabledelayedexpansion
         set "branchName=$(Build.SourceBranch)"
 
-        if not "$(System.PullRequest.SourceBranch)"=="" (
+        if not "$(System.PullRequest.SourceBranch)"=="$(System.PullRequest.SourceBranch)" (
           set "branchname=$(System.PullRequest.SourceBranch)"
         )
         
